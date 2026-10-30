@@ -1,3 +1,4 @@
+/* Resets Gerais */
 * {
   margin: 0;
   padding: 0;
@@ -6,146 +7,255 @@
 }
 
 body {
-  background: radial-gradient(circle at 80% 20%, #1c232b 0%, #0d1117 100%);
-  color: #2b2b2b;
+  background: radial-gradient(circle at 75% 15%, #1a2332 0%, #090c10 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 30px 15px;
   position: relative;
   overflow-x: hidden;
 }
 
-/* Efeito da Lua realista no céu */
-.lua {
+/* =======================================
+   LUA REALISTA COM ANIMAÇÃO E CRATERAS
+   ======================================= */
+.sky-container {
   position: fixed;
-  top: 25px;
-  right: 35px;
-  width: 85px;
-  height: 85px;
-  background: #f0f4f8;
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(226, 232, 240, 0.6), 0 0 60px rgba(138, 180, 248, 0.3);
+  top: 20px;
+  right: 40px;
   z-index: 1;
 }
 
-/* Animação de brisa/vento suave */
-.vento-bg {
+.lua-realista {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #dbe3ea 45%, #9aaab8 85%, #607080 100%);
+  box-shadow: 
+    0 0 25px rgba(235, 243, 250, 0.8),
+    0 0 60px rgba(138, 180, 248, 0.4),
+    0 0 120px rgba(138, 180, 248, 0.2);
+  position: relative;
+  overflow: hidden;
+  animation: pulsoLua 4s infinite alternate ease-in-out;
+}
+
+@keyframes pulsoLua {
+  0% {
+    box-shadow: 
+      0 0 25px rgba(235, 243, 250, 0.7),
+      0 0 50px rgba(138, 180, 248, 0.3);
+  }
+  100% {
+    box-shadow: 
+      0 0 35px rgba(255, 255, 255, 0.9),
+      0 0 80px rgba(138, 180, 248, 0.5);
+  }
+}
+
+/* Crateras da Lua */
+.cratera {
+  position: absolute;
+  background: rgba(80, 95, 110, 0.25);
+  border-radius: 50%;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.c1 { width: 26px; height: 26px; top: 20px; left: 25px; }
+.c2 { width: 18px; height: 18px; top: 55px; left: 18px; }
+.c3 { width: 32px; height: 32px; top: 45px; left: 55px; }
+.c4 { width: 14px; height: 14px; top: 18px; left: 65px; }
+.c5 { width: 10px; height: 10px; top: 80px; left: 45px; }
+
+/* =======================================
+   ANIMAÇÃO DO VENTO
+   ======================================= */
+.vento-container {
   position: fixed;
   top: 0;
-  left: -100%;
-  width: 300%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-  animation: ventoAnimacao 6s infinite linear;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
   z-index: 2;
 }
 
-@keyframes ventoAnimacao {
-  0% { transform: translateX(0) skewX(-5deg); }
-  100% { transform: translateX(35%) skewX(-5deg); }
+.linha-vento {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  border-radius: 50%;
+  animation: passarVento 7s infinite linear;
 }
 
-/* Painel do som noturno */
-.painel-audio {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 10;
+.v1 { top: 25%; left: -30%; width: 50%; animation-delay: 0s; }
+.v2 { top: 55%; left: -40%; width: 60%; animation-delay: 2.5s; }
+.v3 { top: 80%; left: -35%; width: 45%; animation-delay: 4.5s; }
+
+@keyframes passarVento {
+  0% { transform: translateX(0) translateY(0); opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translateX(180vw) translateY(30px); opacity: 0; }
 }
 
-.btn-audio {
-  background: #27303a;
-  color: #8ab4f8;
-  border: 1px solid #364350;
-  padding: 10px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  transition: all 0.3s ease;
-}
-
-.btn-audio:hover {
-  background: #364350;
-  color: #ffffff;
-}
-
-/* Cenário simulando papel sob a noite */
-.cenario-papel {
+/* =======================================
+   CENÁRIO: MESA, MÃO E FOLHA DE PAPEL
+   ======================================= */
+.mesa-cenario {
   position: relative;
   z-index: 4;
-  max-width: 900px;
   width: 100%;
+  max-width: 920px;
+  margin-top: 40px;
 }
 
-/* Ilustração estilizada da mão segurando o boletim */
-.mao-ilustracao {
+/* Folha de Papel do Boletim */
+.folha-papel {
+  background: #fcfbf9;
+  background-image: linear-gradient(#f4f1ea 1px, transparent 1px);
+  background-size: 100% 28px;
+  color: #1c2128;
+  border-radius: 4px;
+  padding: 40px;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 2px 6px rgba(0, 0, 0, 0.4);
+  position: relative;
+  border: 1px solid #e0dad0;
+  transform: rotate(-0.5deg);
+}
+
+.textura-dobra {
   position: absolute;
-  bottom: -20px;
-  left: -25px;
-  font-size: 3.5rem;
-  z-index: 6;
-  transform: rotate(-25deg);
-  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.6));
+  top: 0;
+  right: 0;
+  border-width: 0 30px 30px 0;
+  border-style: solid;
+  border-color: #dcd5c9 #1a2332;
+  box-shadow: -2px 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Mão Segurando o Papel */
+.mao-container {
+  position: absolute;
+  bottom: -35px;
+  left: -20px;
+  z-index: 10;
   pointer-events: none;
 }
 
-/* O Boletim em formato de folha de papel elegante */
-.container-boletim {
-  background: #fdfdfd; /* Cor de papel físico */
-  color: #202124;
-  border-radius: 8px;
-  padding: 35px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(0, 0, 0, 0.03);
-  position: relative;
-  border: 1px solid #dcdcdc;
+.pulso {
+  width: 70px;
+  height: 90px;
+  background: #dca882;
+  border-radius: 15px;
+  transform: rotate(-30deg);
+  box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2);
 }
 
-/* Cabeçalho */
+.palma {
+  width: 80px;
+  height: 70px;
+  background: #e4b38d;
+  border-radius: 20px;
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  transform: rotate(-15deg);
+}
+
+.dedo {
+  position: absolute;
+  background: #eebd97;
+  border-radius: 12px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.polegar {
+  width: 28px;
+  height: 65px;
+  top: -45px;
+  left: 45px;
+  transform: rotate(25deg);
+  z-index: 12;
+}
+
+.indicador {
+  width: 22px;
+  height: 70px;
+  top: -55px;
+  left: 20px;
+  transform: rotate(5deg);
+  z-index: 11;
+}
+
+.medio {
+  width: 22px;
+  height: 75px;
+  top: -58px;
+  left: -2px;
+  transform: rotate(-8deg);
+  z-index: 9;
+}
+
+.anelar {
+  width: 20px;
+  height: 68px;
+  top: -50px;
+  left: -22px;
+  transform: rotate(-20deg);
+  z-index: 8;
+}
+
+/* =======================================
+   ESTILOS DO BOLETIM (CONTEÚDO)
+   ======================================= */
 .cabecalho {
   text-align: center;
-  margin-bottom: 25px;
-  border-bottom: 2px solid #1a2332;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #2b3545;
   padding-bottom: 15px;
 }
 
 .cabecalho h1 {
-  color: #1a2332; /* Cinza-escuro forte */
-  font-size: 2rem;
+  font-size: 2.2rem;
+  color: #1a2332;
+  letter-spacing: 1px;
 }
 
 .subtitulo {
-  color: #5f6368;
-  font-size: 1rem;
+  color: #57606a;
+  font-size: 1.05rem;
+  margin-top: 4px;
 }
 
-/* Cards com bordas arredondadas e minimalistas */
+/* Cards */
 .cards-resumo {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 }
 
 .card {
-  background-color: #f1f3f4;
-  border: 1px solid #dadce0;
-  border-radius: 12px;
-  padding: 15px;
+  background: #ffffff;
+  border: 1px solid #d0d7de;
+  border-radius: 10px;
+  padding: 16px;
   text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
 
 .card h3 {
   font-size: 0.85rem;
-  color: #5f6368;
-  margin-bottom: 6px;
+  color: #57606a;
+  margin-bottom: 8px;
 }
 
 .card p {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #1a2332;
 }
@@ -153,8 +263,9 @@ body {
 .status-frequencia {
   display: block;
   font-size: 0.75rem;
-  color: #137333;
+  color: #1a7f37;
   margin-top: 4px;
+  font-weight: 600;
 }
 
 /* Tabela */
@@ -165,20 +276,23 @@ body {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 0.95rem;
+  background: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 th, td {
-  padding: 12px 10px;
+  padding: 12px;
   text-align: center;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e1e4e8;
 }
 
 th {
   background-color: #1a2332;
   color: #ffffff;
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 th:first-child, td:first-child {
@@ -187,33 +301,59 @@ th:first-child, td:first-child {
 
 /* Situações */
 .situacao-bom {
-  color: #137333;
+  color: #1a7f37;
   font-weight: 600;
 }
 
 .situacao-atencao {
-  color: #c5221f;
+  color: #cf222e;
   font-weight: 600;
 }
 
 .situacao-indisponivel {
-  color: #70757a;
+  color: #6e7781;
 }
 
-/* Ajustes para Celular */
-@media (max-width: 600px) {
-  .container-boletim {
-    padding: 18px;
+/* Botão de Áudio */
+.painel-audio {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 20;
+}
+
+.btn-audio {
+  background: #1a2332;
+  color: #ffffff;
+  border: 1px solid #30363d;
+  padding: 12px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  transition: transform 0.2s;
+}
+
+.btn-audio:hover {
+  transform: scale(1.05);
+}
+
+/* Responsividade para Celular */
+@media (max-width: 650px) {
+  .folha-papel {
+    padding: 20px 15px;
   }
-  .lua {
-    width: 50px;
-    height: 50px;
-    top: 15px;
+  .lua-realista {
+    width: 65px;
+    height: 65px;
+  }
+  .sky-container {
+    top: 10px;
     right: 15px;
   }
-  .mao-ilustracao {
-    font-size: 2.5rem;
-    left: -15px;
-    bottom: -15px;
+  .mao-container {
+    transform: scale(0.6);
+    bottom: -45px;
+    left: -35px;
   }
 }

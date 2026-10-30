@@ -8,26 +8,48 @@
 </head>
 <body>
 
-  <!-- Lua com brilho noturno -->
-  <div class="lua"></div>
+  <!-- Lua Realista Animada -->
+  <div class="sky-container">
+    <div class="lua-realista">
+      <div class="cratera c1"></div>
+      <div class="cratera c2"></div>
+      <div class="cratera c3"></div>
+      <div class="cratera c4"></div>
+      <div class="cratera c5"></div>
+      <div class="brilho-lua"></div>
+    </div>
+  </div>
 
-  <!-- Camadas da animação de vento suave -->
-  <div class="vento-bg"></div>
-  <div class="folhas-vento"></div>
+  <!-- Animação do Vento e Brisa Noturna -->
+  <div class="vento-container">
+    <div class="linha-vento v1"></div>
+    <div class="linha-vento v2"></div>
+    <div class="linha-vento v3"></div>
+  </div>
 
-  <!-- Painel de Áudio Ambient (Vento e Grilos) -->
+  <!-- Painel de Som -->
   <div class="painel-audio">
     <button id="btn-som" class="btn-audio">🔊 Ativar Sons da Noite</button>
   </div>
 
-  <!-- Cenário: Folha de Papel (Boletim) na Mesa sob a Árvore -->
-  <div class="cenario-papel">
+  <!-- Cenário do Boletim e Mão -->
+  <div class="mesa-cenario">
     
-    <!-- Mão segurando a borda do papel -->
-    <div class="mao-ilustracao">✋</div>
+    <!-- Mão Realista em CSS Segurando o Boletim -->
+    <div class="mao-container">
+      <div class="pulso"></div>
+      <div class="palma"></div>
+      <div class="dedo polegar"></div>
+      <div class="dedo indicador"></div>
+      <div class="dedo medio"></div>
+      <div class="dedo anelar"></div>
+    </div>
 
-    <div class="container-boletim">
-      <!-- Cabeçalho do Boletim -->
+    <!-- Papel do Boletim -->
+    <div class="folha-papel">
+      <div class="textura-dobra"></div>
+
+      <!-- Cabeçalho -->
       <header class="cabecalho">
         <h1>Boletim Digital</h1>
         <p class="subtitulo">9º Ano — Estudante Exemplo</p>
@@ -73,7 +95,7 @@
             </tr>
           </thead>
           <tbody id="corpo-tabela">
-            <!-- As linhas da tabela serão inseridas via JavaScript -->
+            <!-- As linhas serão geradas pelo JavaScript -->
           </tbody>
         </table>
       </main>
