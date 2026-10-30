@@ -8,21 +8,24 @@
 </head>
 <body>
 
-  <!-- Fundo do Céu: Estrelas e Lua -->
+  <!-- Céu Noturno Noturno Ultra Realista -->
   <div class="sky-container">
-    <div class="estrelas"></div>
-    <div class="lua-realista">
+    <div class="estrelas-camada1"></div>
+    <div class="estrelas-camada2"></div>
+    <div class="lua-realista-3d">
+      <div class="lua-terminador"></div>
       <div class="cratera c1"></div>
       <div class="cratera c2"></div>
       <div class="cratera c3"></div>
       <div class="cratera c4"></div>
       <div class="cratera c5"></div>
       <div class="cratera c6"></div>
-      <div class="brilho-incidente"></div>
+      <div class="cratera c7"></div>
+      <div class="brilho-superficie"></div>
     </div>
   </div>
 
-  <!-- Brisa Noturna e Partículas de Vento -->
+  <!-- Brisa Noturna e Partículas em Suspensão -->
   <div class="vento-container">
     <div class="linha-vento v1"></div>
     <div class="linha-vento v2"></div>
@@ -31,50 +34,53 @@
     <div class="folha-voando f2">🍂</div>
   </div>
 
-  <!-- Campo de Gramado Hiper-Realista Balançando -->
-  <div class="gramado-realista">
-    <div class="fio-grama g1"></div>
-    <div class="fio-grama g2"></div>
-    <div class="fio-grama g3"></div>
-    <div class="fio-grama g4"></div>
-    <div class="fio-grama g5"></div>
-    <div class="fio-grama g6"></div>
-    <div class="fio-grama g7"></div>
-    <div class="fio-grama g8"></div>
-    <div class="fio-grama g9"></div>
-    <div class="fio-grama g10"></div>
+  <!-- Gramado em Três Camadas de Profundidade -->
+  <div class="gramado-3d">
+    <div class="camada-grama fundo">
+      <div class="fio gf1"></div><div class="fio gf2"></div><div class="fio gf3"></div><div class="fio gf4"></div>
+    </div>
+    <div class="camada-grama meio">
+      <div class="fio gm1"></div><div class="fio gm2"></div><div class="fio gm3"></div><div class="fio gm4"></div><div class="fio gm5"></div>
+    </div>
+    <div class="camada-grama frente">
+      <div class="fio gfr1"></div><div class="fio gfr2"></div><div class="fio gfr3"></div><div class="fio gfr4"></div>
+    </div>
   </div>
 
-  <!-- Controle de Sons da Noite -->
+  <!-- Botão de Áudio para Experiência Imersiva -->
   <div class="painel-audio">
     <button id="btn-som" class="btn-audio">🔊 Ativar Sons da Noite</button>
   </div>
 
-  <!-- Cenário da Mesa com o Papel e as Mãos -->
+  <!-- Cenário Central: Papel do Boletim e Mãos Realistas -->
   <div class="mesa-cenario">
     
-    <!-- Mão Esquerda Segurando a Borda -->
-    <div class="mao-realista mao-esq">
-      <div class="pulso-real"></div>
-      <div class="palma-real"></div>
-      <div class="dedo-real d-polegar"></div>
-      <div class="dedo-real d-indicador"></div>
-      <div class="dedo-real d-medio"></div>
+    <!-- Mão Esquerda Realista (Anatômica em CSS) -->
+    <div class="mao-anatomica mao-esquerda">
+      <div class="braco-pulso"></div>
+      <div class="palma-base"></div>
+      <div class="dedo-completo polegar"><div class="unha"></div></div>
+      <div class="dedo-completo indicador"><div class="dobra"></div><div class="unha"></div></div>
+      <div class="dedo-completo medio"><div class="dobra"></div><div class="unha"></div></div>
+      <div class="dedo-completo anelar"><div class="dobra"></div><div class="unha"></div></div>
+      <div class="dedo-completo minimo"><div class="dobra"></div><div class="unha"></div></div>
     </div>
 
-    <!-- Mão Direita Segurando a Borda -->
-    <div class="mao-realista mao-dir">
-      <div class="pulso-real"></div>
-      <div class="palma-real"></div>
-      <div class="dedo-real d-polegar"></div>
-      <div class="dedo-real d-indicador"></div>
-      <div class="dedo-real d-medio"></div>
+    <!-- Mão Direita Realista (Anatômica em CSS) -->
+    <div class="mao-anatomica mao-direita">
+      <div class="braco-pulso"></div>
+      <div class="palma-base"></div>
+      <div class="dedo-completo polegar"><div class="unha"></div></div>
+      <div class="dedo-completo indicador"><div class="dobra"></div><div class="unha"></div></div>
+      <div class="dedo-completo medio"><div class="dobra"></div><div class="unha"></div></div>
+      <div class="dedo-completo anelar"><div class="dobra"></div><div class="unha"></div></div>
+      <div class="dedo-completo minimo"><div class="dobra"></div><div class="unha"></div></div>
     </div>
 
-    <!-- O Papel do Boletim -->
-    <div class="folha-papel">
-      <div class="iluminacao-lua-papel"></div>
-      <div class="textura-dobra"></div>
+    <!-- O Papel Físico do Boletim -->
+    <div class="folha-papel-real">
+      <div class="luz-lua-incidente"></div>
+      <div class="dobra-canto"></div>
 
       <!-- Cabeçalho -->
       <header class="cabecalho">
@@ -123,7 +129,7 @@
             </tr>
           </thead>
           <tbody id="corpo-tabela">
-            <!-- As 15 linhas serão inseridas via JavaScript -->
+            <!-- Gerado via JS -->
           </tbody>
         </table>
       </main>
