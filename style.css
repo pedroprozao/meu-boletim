@@ -1,46 +1,62 @@
 /* ==========================================================================
-   BOLETIM DIGITAL - TEMA NOTURNO REALISTA (600+ LINHAS DE CSS AVANÇADO)
+   BOLETIM DIGITAL - TEMA NOTURNO REALISTA (1000+ LINHAS DE CSS AVANÇADO)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. CONFIGURAÇÕES E VARIÁVEIS ANATÔMICAS E DE AMBIENTE
+   1. VARIÁVEIS GLOBAIS E PALETA DE CORES
    -------------------------------------------------------------------------- */
 :root {
-  --sky-darkness: #04070d;
-  --sky-mid: #0b1320;
-  --sky-glow: #1a2a40;
-  --moon-white: #ffffff;
-  --moon-gray: #a3b8cc;
-  --moon-dark: #526375;
-  --skin-base: #dfa17b;
-  --skin-shadow: #b37350;
-  --skin-highlight: #f2bf9e;
-  --skin-knuckle: #cb8964;
-  --nail-color: rgba(255, 230, 220, 0.4);
-  --paper-color: #fcfaf4;
-  --paper-line: #e6e0d0;
-  --text-dark: #1e2633;
-  --text-muted: #5e6a7e;
-  --accent-green: #15803d;
-  --accent-red: #b91c1c;
+  --sky-top: #03060d;
+  --sky-mid: #080e1a;
+  --sky-glow: #132035;
+  --sky-horizon: #1b2e4a;
+  --moon-core: #ffffff;
+  --moon-surface: #e2e8f0;
+  --moon-shadow-1: #94a3b8;
+  --moon-shadow-2: #64748b;
+  --moon-crater: #475569;
+  --moon-dark: #1e293b;
+  --skin-light: #f5c4a5;
+  --skin-mid: #e2a581;
+  --skin-dark: #be7b55;
+  --skin-shadow: #985733;
+  --skin-knuckle: #cd8761;
+  --nail-color: rgba(255, 235, 225, 0.5);
+  --paper-bg: #fdfbf7;
+  --paper-line: #e8e2d2;
+  --paper-margin: rgba(239, 68, 68, 0.15);
+  --paper-border: #d2c8b4;
+  --text-main: #1e2530;
+  --text-muted: #5a6578;
+  --text-dark: #0f172a;
+  --status-good: #15803d;
+  --status-good-bg: #dcfce7;
+  --status-warn: #b91c1c;
+  --status-warn-bg: #fee2e2;
+  --status-neutral: #64748b;
 }
 
-* {
+/* Reset Global */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
 }
 
-html, body {
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
   width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
+  height: 100%;
 }
 
 body {
-  background: radial-gradient(circle at 80% 10%, var(--sky-glow) 0%, var(--sky-mid) 45%, var(--sky-darkness) 90%);
-  color: var(--text-dark);
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: radial-gradient(ellipse at 80% 12%, var(--sky-horizon) 0%, var(--sky-glow) 30%, var(--sky-mid) 65%, var(--sky-top) 100%);
+  color: var(--text-main);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,7 +65,75 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   2. CÉU NOTURNO E ESTRELAS MULTICAMADAS
+   2. ILUMINAÇÃO AMBIENTE NOTURNA E ATMOSFERA
+   -------------------------------------------------------------------------- */
+.luz-ambiente-noturna {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 80% 15%, rgba(147, 197, 253, 0.12) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   3. SISTEMA DE CHUVA DINÂMICA E RELÂMPAGOS (20% CHANCE)
+   -------------------------------------------------------------------------- */
+.chuva-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 4;
+  overflow: hidden;
+  display: none; /* Ativado via JavaScript */
+}
+
+.pingo-chuva {
+  position: absolute;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.7));
+  width: 1px;
+  height: 40px;
+  opacity: 0.65;
+  animation: cairChuva 0.75s infinite linear;
+}
+
+@keyframes cairChuva {
+  0% { transform: translateY(-100px) translateX(0); }
+  100% { transform: translateY(110vh) translateX(-20px); }
+}
+
+.raio-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  display: none;
+}
+
+.animar-raio {
+  animation: flashRaio 0.35s ease-in-out;
+}
+
+@keyframes flashRaio {
+  0% { opacity: 0; }
+  25% { opacity: 0.85; }
+  50% { opacity: 0.15; }
+  75% { opacity: 0.6; }
+  100% { opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   4. CÉU NOTURNO, ESTRELAS MULTICAMADAS E NEBLINA
    -------------------------------------------------------------------------- */
 .sky-container {
   position: fixed;
@@ -61,21 +145,37 @@ body {
   z-index: 1;
 }
 
+.neblina-noturna {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+  pointer-events: none;
+}
+
+.n1 { top: 10%; left: -50%; animation: moverNeblina 25s infinite linear; }
+.n2 { top: 40%; left: -80%; animation: moverNeblina 35s infinite linear; }
+
+@keyframes moverNeblina {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
 .estrelas-camada1 {
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(1.5px 1.5px at 40px 60px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 180px 120px, #cce3ff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 320px 40px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 480px 220px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(1.5px 1.5px at 650px 90px, #9bbfff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 820px 160px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 990px 80px, #ffffff, rgba(0,0,0,0));
+    radial-gradient(1.5px 1.5px at 30px 40px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 150px 90px, #dbeaf0, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 280px 160px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 420px 50px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 600px 120px, #93c5fd, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 780px 70px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 950px 180px, #ffffff, rgba(0,0,0,0));
   background-repeat: repeat;
-  background-size: 1000px 400px;
+  background-size: 1100px 400px;
   opacity: 0.8;
-  animation: piscarCeu1 4s infinite alternate ease-in-out;
+  animation: piscarEstrelas1 4s infinite alternate ease-in-out;
 }
 
 .estrelas-camada2 {
@@ -85,43 +185,61 @@ body {
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(1px 1px at 90px 180px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(2.5px 2.5px at 290px 90px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(1.5px 1.5px at 550px 190px, #cce3ff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 740px 40px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 910px 210px, #ffffff, rgba(0,0,0,0));
+    radial-gradient(1px 1px at 80px 140px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2.5px 2.5px at 230px 60px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 500px 150px, #bfdbfe, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 710px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 880px 190px, #ffffff, rgba(0,0,0,0));
   background-repeat: repeat;
   background-size: 1200px 500px;
   opacity: 0.5;
-  animation: piscarCeu2 6s infinite alternate ease-in-out;
+  animation: piscarEstrelas2 6s infinite alternate ease-in-out;
 }
 
-@keyframes piscarCeu1 { 0% { opacity: 0.4; } 100% { opacity: 0.9; } }
-@keyframes piscarCeu2 { 0% { opacity: 0.7; } 100% { opacity: 0.3; } }
+.estrelas-camada3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 120px 220px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 350px 110px, #e0f2fe, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 620px 80px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2.5px 2.5px at 810px 230px, #ffffff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 1300px 450px;
+  opacity: 0.6;
+  animation: piscarEstrelas3 5s infinite alternate ease-in-out;
+}
+
+@keyframes piscarEstrelas1 { 0% { opacity: 0.4; } 100% { opacity: 0.95; } }
+@keyframes piscarEstrelas2 { 0% { opacity: 0.7; } 100% { opacity: 0.25; } }
+@keyframes piscarEstrelas3 { 0% { opacity: 0.3; } 100% { opacity: 0.8; } }
 
 /* --------------------------------------------------------------------------
-   3. LUA HIPER-REALISTA EM CSS 3D
+   5. LUA HIPER-REALISTA EM CSS 3D
    -------------------------------------------------------------------------- */
 .lua-realista-3d {
   position: absolute;
   top: 30px;
   right: 60px;
-  width: 130px;
-  height: 130px;
+  width: 135px;
+  height: 135px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, var(--moon-white) 0%, #e2e8f0 35%, var(--moon-gray) 70%, var(--moon-dark) 100%);
+  background: radial-gradient(circle at 32% 32%, var(--moon-core) 0%, var(--moon-surface) 35%, var(--moon-shadow-1) 70%, var(--moon-shadow-2) 100%);
   box-shadow: 
     0 0 35px rgba(255, 255, 255, 0.9),
-    0 0 90px rgba(155, 190, 235, 0.4),
-    0 0 180px rgba(155, 190, 235, 0.2),
-    inset -15px -15px 30px rgba(4, 7, 13, 0.7);
+    0 0 90px rgba(147, 197, 253, 0.45),
+    0 0 180px rgba(147, 197, 253, 0.22),
+    inset -15px -15px 30px rgba(3, 6, 13, 0.75);
   overflow: hidden;
-  animation: pulsoAuraLua 5s infinite alternate ease-in-out;
+  animation: auraLua 5s infinite alternate ease-in-out;
 }
 
-@keyframes pulsoAuraLua {
-  0% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 75px rgba(155, 190, 235, 0.3); }
-  100% { box-shadow: 0 0 50px rgba(255, 255, 255, 1), 0 0 110px rgba(155, 190, 235, 0.5); }
+@keyframes auraLua {
+  0% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 75px rgba(147, 197, 253, 0.35); }
+  100% { box-shadow: 0 0 50px rgba(255, 255, 255, 1), 0 0 110px rgba(147, 197, 253, 0.55); }
 }
 
 .lua-terminador {
@@ -130,39 +248,39 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(125deg, transparent 40%, rgba(5, 10, 20, 0.45) 80%);
+  background: linear-gradient(125deg, transparent 42%, rgba(3, 6, 13, 0.5) 82%);
   pointer-events: none;
   z-index: 5;
 }
 
 .cratera {
   position: absolute;
-  background: rgba(82, 99, 117, 0.35);
+  background: rgba(71, 85, 105, 0.38);
   border-radius: 50%;
-  box-shadow: inset 3px 3px 6px rgba(4, 7, 13, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.4);
+  box-shadow: inset 3px 3px 6px rgba(3, 6, 13, 0.75), 1px 1px 2px rgba(255, 255, 255, 0.45);
 }
 
-.c1 { width: 34px; height: 34px; top: 22px; left: 28px; }
-.c2 { width: 22px; height: 22px; top: 68px; left: 22px; }
-.c3 { width: 40px; height: 40px; top: 56px; left: 62px; }
-.c4 { width: 16px; height: 16px; top: 20px; left: 74px; }
-.c5 { width: 14px; height: 14px; top: 100px; left: 50px; }
-.c6 { width: 26px; height: 16px; top: 88px; left: 82px; transform: rotate(-28deg); }
-.c7 { width: 18px; height: 18px; top: 40px; left: 10px; }
+.c1 { width: 36px; height: 36px; top: 22px; left: 30px; }
+.c2 { width: 22px; height: 22px; top: 72px; left: 24px; }
+.c3 { width: 42px; height: 42px; top: 58px; left: 64px; }
+.c4 { width: 16px; height: 16px; top: 20px; left: 78px; }
+.c5 { width: 14px; height: 14px; top: 105px; left: 52px; }
+.c6 { width: 28px; height: 16px; top: 90px; left: 86px; transform: rotate(-28deg); }
+.c7 { width: 18px; height: 18px; top: 42px; left: 12px; }
 
 .brilho-superficie {
   position: absolute;
-  top: 10px;
-  left: 20px;
-  width: 40px;
-  height: 25px;
-  background: rgba(255, 255, 255, 0.3);
+  top: 12px;
+  left: 22px;
+  width: 42px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.35);
   filter: blur(8px);
   border-radius: 50%;
 }
 
 /* --------------------------------------------------------------------------
-   4. ANIMAÇÃO DE VENTO E FOLHAS FLUTUANTES
+   6. ANIMAÇÃO DE VENTO E FOLHAS FLUTUANTES
    -------------------------------------------------------------------------- */
 .vento-container {
   position: fixed;
@@ -179,14 +297,14 @@ body {
   height: 2px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   border-radius: 50%;
-  animation: animarVento 6.5s infinite linear;
+  animation: moverVento 6.5s infinite linear;
 }
 
 .v1 { top: 18%; left: -35%; width: 55%; animation-delay: 0s; }
 .v2 { top: 48%; left: -45%; width: 65%; animation-delay: 2.3s; }
 .v3 { top: 78%; left: -40%; width: 50%; animation-delay: 4.5s; }
 
-@keyframes animarVento {
+@keyframes moverVento {
   0% { transform: translateX(0) translateY(0); opacity: 0; }
   30% { opacity: 0.9; }
   70% { opacity: 0.9; }
@@ -202,7 +320,8 @@ body {
 }
 
 .f1 { top: 25%; left: -10%; animation-delay: 1s; }
-.f2 { top: 60%; left: -10%; animation-delay: 6s; }
+.f2 { top: 60%; left: -10%; animation-delay: 5.5s; }
+.f3 { top: 40%; left: -10%; animation-delay: 8s; }
 
 @keyframes voarFolha {
   0% { transform: translateX(0) translateY(0) rotate(0deg); opacity: 0; }
@@ -212,14 +331,14 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   5. GRAMADO EM CAMADAS PARALAXE (3D)
+   7. GRAMADO EM CAMADAS PARALAXE 3D
    -------------------------------------------------------------------------- */
 .gramado-3d {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100vw;
-  height: 80px;
+  height: 85px;
   pointer-events: none;
   z-index: 3;
 }
@@ -241,20 +360,20 @@ body {
   transform-origin: bottom center;
 }
 
-.fundo .fio { border-bottom: 60px solid #040e07; animation: balancoG1 4s infinite ease-in-out alternate; }
-.meio .fio { border-bottom: 75px solid #081a0e; animation: balancoG2 3.5s infinite ease-in-out alternate; }
-.frente .fio { border-bottom: 90px solid #0f2c18; animation: balancoG3 3s infinite ease-in-out alternate; }
+.fundo .fio { border-bottom: 65px solid #040e07; animation: balancoG1 4s infinite ease-in-out alternate; }
+.meio .fio { border-bottom: 80px solid #081a0e; animation: balancoG2 3.5s infinite ease-in-out alternate; }
+.frente .fio { border-bottom: 95px solid #0f2c18; animation: balancoG3 3s infinite ease-in-out alternate; }
 
-.gf1 { animation-delay: 0.2s; } .gf2 { animation-delay: 1.1s; } .gf3 { animation-delay: 0.7s; } .gf4 { animation-delay: 1.8s; }
-.gm1 { animation-delay: 0s; } .gm2 { animation-delay: 0.9s; } .gm3 { animation-delay: 1.5s; } .gm4 { animation-delay: 0.4s; } .gm5 { animation-delay: 1.2s; }
-.gfr1 { animation-delay: 0.3s; } .gfr2 { animation-delay: 1.4s; } .gfr3 { animation-delay: 0.8s; } .gfr4 { animation-delay: 0.1s; }
+.gf1 { animation-delay: 0.2s; } .gf2 { animation-delay: 1.1s; } .gf3 { animation-delay: 0.7s; } .gf4 { animation-delay: 1.8s; } .gf5 { animation-delay: 0.4s; }
+.gm1 { animation-delay: 0s; } .gm2 { animation-delay: 0.9s; } .gm3 { animation-delay: 1.5s; } .gm4 { animation-delay: 0.4s; } .gm5 { animation-delay: 1.2s; } .gm6 { animation-delay: 0.6s; }
+.gfr1 { animation-delay: 0.3s; } .gfr2 { animation-delay: 1.4s; } .gfr3 { animation-delay: 0.8s; } .gfr4 { animation-delay: 0.1s; } .gfr5 { animation-delay: 1.0s; }
 
 @keyframes balancoG1 { 0% { transform: rotate(0deg); } 100% { transform: rotate(8deg) skewX(5deg); } }
 @keyframes balancoG2 { 0% { transform: rotate(0deg); } 100% { transform: rotate(12deg) skewX(8deg); } }
 @keyframes balancoG3 { 0% { transform: rotate(0deg); } 100% { transform: rotate(-10deg) skewX(-6deg); } }
 
 /* --------------------------------------------------------------------------
-   6. MÃO ANATÔMICA ULTRA REALISTA EM CSS (ESQUERDA E DIREITA)
+   8. MÃO ANATÔMICA ULTRA REALISTA EM CSS
    -------------------------------------------------------------------------- */
 .mao-anatomica {
   position: absolute;
@@ -281,7 +400,7 @@ body {
   left: 20px;
   width: 80px;
   height: 90px;
-  background: linear-gradient(135deg, var(--skin-shadow) 0%, var(--skin-base) 60%, var(--skin-highlight) 100%);
+  background: linear-gradient(135deg, var(--skin-shadow) 0%, var(--skin-mid) 60%, var(--skin-light) 100%);
   border-radius: 20px;
   transform: rotate(-25deg);
   box-shadow: inset -6px -6px 14px rgba(0,0,0,0.4);
@@ -293,15 +412,14 @@ body {
   left: 15px;
   width: 90px;
   height: 75px;
-  background: radial-gradient(circle at 40% 40%, var(--skin-highlight) 0%, var(--skin-base) 60%, var(--skin-shadow) 100%);
+  background: radial-gradient(circle at 40% 40%, var(--skin-light) 0%, var(--skin-mid) 60%, var(--skin-shadow) 100%);
   border-radius: 25px;
   box-shadow: 0 12px 25px rgba(0,0,0,0.6);
 }
 
-/* Dedos Individuais com Articulações e Unhas */
 .dedo-completo {
   position: absolute;
-  background: linear-gradient(180deg, var(--skin-highlight) 0%, var(--skin-base) 50%, var(--skin-shadow) 100%);
+  background: linear-gradient(180deg, var(--skin-light) 0%, var(--skin-mid) 50%, var(--skin-shadow) 100%);
   border-radius: 12px;
   box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.45);
 }
@@ -328,53 +446,14 @@ body {
   box-shadow: inset 0 1px 2px rgba(255,255,255,0.8);
 }
 
-.polegar {
-  width: 30px;
-  height: 68px;
-  bottom: 25px;
-  left: 65px;
-  transform: rotate(28deg);
-  z-index: 20;
-}
-
-.indicador {
-  width: 24px;
-  height: 78px;
-  bottom: 40px;
-  left: 38px;
-  transform: rotate(10deg);
-  z-index: 19;
-}
-
-.medio {
-  width: 24px;
-  height: 84px;
-  bottom: 42px;
-  left: 12px;
-  transform: rotate(-2deg);
-  z-index: 18;
-}
-
-.anelar {
-  width: 22px;
-  height: 76px;
-  bottom: 35px;
-  left: -10px;
-  transform: rotate(-15deg);
-  z-index: 17;
-}
-
-.minimo {
-  width: 20px;
-  height: 62px;
-  bottom: 22px;
-  left: -28px;
-  transform: rotate(-28deg);
-  z-index: 16;
-}
+.polegar { width: 30px; height: 68px; bottom: 25px; left: 65px; transform: rotate(28deg); z-index: 20; }
+.indicador { width: 24px; height: 78px; bottom: 40px; left: 38px; transform: rotate(10deg); z-index: 19; }
+.medio { width: 24px; height: 84px; bottom: 42px; left: 12px; transform: rotate(-2deg); z-index: 18; }
+.anelar { width: 22px; height: 76px; bottom: 35px; left: -10px; transform: rotate(-15deg); z-index: 17; }
+.minimo { width: 20px; height: 62px; bottom: 22px; left: -28px; transform: rotate(-28deg); z-index: 16; }
 
 /* --------------------------------------------------------------------------
-   7. CENÁRIO CENTRAL E FOLHA DE PAPEL REALISTA
+   9. CENÁRIO CENTRAL E FOLHA DE PAPEL
    -------------------------------------------------------------------------- */
 .mesa-cenario {
   position: relative;
@@ -385,12 +464,12 @@ body {
 }
 
 .folha-papel-real {
-  background: var(--paper-color);
+  background: var(--paper-bg);
   background-image: 
-    linear-gradient(90deg, rgba(239, 68, 68, 0.12) 1px, transparent 1px),
-    repeating-linear-gradient(var(--paper-color) 0px, var(--paper-color) 27px, var(--paper-line) 28px);
+    linear-gradient(90deg, var(--paper-margin) 1px, transparent 1px),
+    repeating-linear-gradient(var(--paper-bg) 0px, var(--paper-bg) 27px, var(--paper-line) 28px);
   background-size: 100% 100%, 100% 28px;
-  color: var(--text-dark);
+  color: var(--text-main);
   border-radius: 6px;
   padding: 50px 45px;
   box-shadow: 
@@ -398,7 +477,7 @@ body {
     0 12px 30px rgba(0, 0, 0, 0.75),
     inset 0 0 120px rgba(180, 160, 120, 0.12);
   position: relative;
-  border: 1px solid #dcd6c8;
+  border: 1px solid var(--paper-border);
   transform: rotate(-0.5deg);
   transition: transform 0.3s ease;
 }
@@ -429,12 +508,12 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   8. CONTEÚDO DO BOLETIM (CABEÇALHO, CARDS E TABELA)
+   10. ESTRUTURA DO BOLETIM (CABEÇALHO, CARDS E TABELA)
    -------------------------------------------------------------------------- */
 .cabecalho {
   text-align: center;
   margin-bottom: 32px;
-  border-bottom: 2px dashed var(--text-dark);
+  border-bottom: 2px dashed var(--text-main);
   padding-bottom: 18px;
 }
 
@@ -445,7 +524,7 @@ body {
 
 .cabecalho h1 {
   font-size: 2.5rem;
-  color: var(--text-dark);
+  color: var(--text-main);
   letter-spacing: 1.5px;
   font-weight: 800;
 }
@@ -457,7 +536,6 @@ body {
   margin-top: 4px;
 }
 
-/* Cards de Resumo */
 .cards-resumo {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -491,18 +569,17 @@ body {
 .card p {
   font-size: 1.65rem;
   font-weight: 800;
-  color: var(--text-dark);
+  color: var(--text-main);
 }
 
 .status-frequencia {
   display: block;
   font-size: 0.78rem;
-  color: var(--accent-green);
+  color: var(--status-good);
   margin-top: 4px;
   font-weight: 700;
 }
 
-/* Tabela Responsiva de Disciplinas */
 .tabela-container {
   overflow-x: auto;
   border-radius: 10px;
@@ -525,7 +602,7 @@ th, td {
 }
 
 th {
-  background-color: var(--text-dark);
+  background-color: var(--text-main);
   color: #ffffff;
   font-weight: 700;
   letter-spacing: 0.8px;
@@ -536,7 +613,7 @@ th {
 th:first-child, td:first-child {
   text-align: left;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-dark);
 }
 
 tr:hover {
@@ -544,8 +621,8 @@ tr:hover {
 }
 
 .situacao-bom {
-  color: var(--accent-green);
-  background-color: #dcfce7;
+  color: var(--status-good);
+  background-color: var(--status-good-bg);
   padding: 4px 10px;
   border-radius: 20px;
   font-weight: 700;
@@ -553,8 +630,8 @@ tr:hover {
 }
 
 .situacao-atencao {
-  color: var(--accent-red);
-  background-color: #fee2e2;
+  color: var(--status-warn);
+  background-color: var(--status-warn-bg);
   padding: 4px 10px;
   border-radius: 20px;
   font-weight: 700;
@@ -562,12 +639,12 @@ tr:hover {
 }
 
 .situacao-indisponivel {
-  color: var(--text-muted);
+  color: var(--status-neutral);
   font-style: italic;
 }
 
 /* --------------------------------------------------------------------------
-   9. PAINEL DE ÁUDIO NOTURNO
+   11. CONTROLE DE ÁUDIO AMBIENTAL
    -------------------------------------------------------------------------- */
 .painel-audio {
   position: fixed;
@@ -577,7 +654,7 @@ tr:hover {
 }
 
 .btn-audio {
-  background: var(--text-dark);
+  background: var(--text-main);
   color: #ffffff;
   border: 1px solid #334155;
   padding: 12px 24px;
@@ -591,33 +668,18 @@ tr:hover {
 
 .btn-audio:hover {
   transform: scale(1.06);
-  background: #0f172a;
+  background: var(--text-dark);
 }
 
 /* --------------------------------------------------------------------------
-   10. ADAPTAÇÃO PARA MÓVEIS / CELULAR
+   12. ADAPTAÇÕES RESPONSIVAS PARA DISPOSITIVOS MÓVEIS
    -------------------------------------------------------------------------- */
 @media (max-width: 680px) {
-  body {
-    padding: 20px 10px 90px 10px;
-  }
-  .folha-papel-real {
-    padding: 25px 15px;
-  }
-  .lua-realista-3d {
-    width: 80px;
-    height: 80px;
-    top: 15px;
-    right: 20px;
-  }
-  .mao-anatomica {
-    transform: scale(0.6);
-    bottom: -50px;
-  }
+  body { padding: 20px 10px 90px 10px; }
+  .folha-papel-real { padding: 25px 15px; }
+  .lua-realista-3d { width: 80px; height: 80px; top: 15px; right: 20px; }
+  .mao-anatomica { transform: scale(0.6); bottom: -50px; }
   .mao-esquerda { left: -45px; }
   .mao-direita { right: -45px; }
-  th, td {
-    padding: 10px 6px;
-    font-size: 0.85rem;
-  }
+  th, td { padding: 10px 6px; font-size: 0.85rem; }
 }

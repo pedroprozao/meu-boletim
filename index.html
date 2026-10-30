@@ -8,10 +8,22 @@
 </head>
 <body>
 
-  <!-- Céu Noturno Noturno Ultra Realista -->
+  <!-- Camada Atmosférica Noturna e Iluminação -->
+  <div class="luz-ambiente-noturna"></div>
+
+  <!-- Efeito Dinâmico de Chuva e Raios (20% de chance) -->
+  <div id="camada-chuva" class="chuva-container"></div>
+  <div id="camada-raio" class="raio-flash"></div>
+
+  <!-- Céu Noturno Ultra Realista com Estrelas e Neblina -->
   <div class="sky-container">
+    <div class="neblina-noturna n1"></div>
+    <div class="neblina-noturna n2"></div>
     <div class="estrelas-camada1"></div>
     <div class="estrelas-camada2"></div>
+    <div class="estrelas-camada3"></div>
+    
+    <!-- Lua 3D Hiper-Realista com Relevo e Crateras -->
     <div class="lua-realista-3d">
       <div class="lua-terminador"></div>
       <div class="cratera c1"></div>
@@ -25,37 +37,38 @@
     </div>
   </div>
 
-  <!-- Brisa Noturna e Partículas em Suspensão -->
+  <!-- Vento Noturno e Folhas Flutuantes -->
   <div class="vento-container">
     <div class="linha-vento v1"></div>
     <div class="linha-vento v2"></div>
     <div class="linha-vento v3"></div>
     <div class="folha-voando f1">🍃</div>
     <div class="folha-voando f2">🍂</div>
+    <div class="folha-voando f3">🌿</div>
   </div>
 
-  <!-- Gramado em Três Camadas de Profundidade -->
+  <!-- Gramado em Camadas Paralaxe 3D -->
   <div class="gramado-3d">
     <div class="camada-grama fundo">
-      <div class="fio gf1"></div><div class="fio gf2"></div><div class="fio gf3"></div><div class="fio gf4"></div>
+      <div class="fio gf1"></div><div class="fio gf2"></div><div class="fio gf3"></div><div class="fio gf4"></div><div class="fio gf5"></div>
     </div>
     <div class="camada-grama meio">
-      <div class="fio gm1"></div><div class="fio gm2"></div><div class="fio gm3"></div><div class="fio gm4"></div><div class="fio gm5"></div>
+      <div class="fio gm1"></div><div class="fio gm2"></div><div class="fio gm3"></div><div class="fio gm4"></div><div class="fio gm5"></div><div class="fio gm6"></div>
     </div>
     <div class="camada-grama frente">
-      <div class="fio gfr1"></div><div class="fio gfr2"></div><div class="fio gfr3"></div><div class="fio gfr4"></div>
+      <div class="fio gfr1"></div><div class="fio gfr2"></div><div class="fio gfr3"></div><div class="fio gfr4"></div><div class="fio gfr5"></div>
     </div>
   </div>
 
-  <!-- Botão de Áudio para Experiência Imersiva -->
+  <!-- Painel de Áudio Ambiental -->
   <div class="painel-audio">
     <button id="btn-som" class="btn-audio">🔊 Ativar Sons da Noite</button>
   </div>
 
-  <!-- Cenário Central: Papel do Boletim e Mãos Realistas -->
+  <!-- Cenário Central: Mãos Anatômicas e Folha de Papel -->
   <div class="mesa-cenario">
     
-    <!-- Mão Esquerda Realista (Anatômica em CSS) -->
+    <!-- Mão Esquerda Anatômica em CSS -->
     <div class="mao-anatomica mao-esquerda">
       <div class="braco-pulso"></div>
       <div class="palma-base"></div>
@@ -66,7 +79,7 @@
       <div class="dedo-completo minimo"><div class="dobra"></div><div class="unha"></div></div>
     </div>
 
-    <!-- Mão Direita Realista (Anatômica em CSS) -->
+    <!-- Mão Direita Anatômica em CSS -->
     <div class="mao-anatomica mao-direita">
       <div class="braco-pulso"></div>
       <div class="palma-base"></div>
@@ -77,7 +90,7 @@
       <div class="dedo-completo minimo"><div class="dobra"></div><div class="unha"></div></div>
     </div>
 
-    <!-- O Papel Físico do Boletim -->
+    <!-- Papel do Boletim -->
     <div class="folha-papel-real">
       <div class="luz-lua-incidente"></div>
       <div class="dobra-canto"></div>
@@ -129,7 +142,7 @@
             </tr>
           </thead>
           <tbody id="corpo-tabela">
-            <!-- Gerado via JS -->
+            <!-- As linhas serão inseridas pelo JavaScript -->
           </tbody>
         </table>
       </main>

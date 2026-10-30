@@ -19,38 +19,22 @@ const dadosBoletim = [
 
 // Função para normalizar notas na escala de 0 a 10
 function normalizarNota(valor) {
-  if (valor === null || valor === undefined || valor === "") {
-    return null;
-  }
-
-  if (typeof valor === "string") {
-    valor = valor.replace(",", ".");
-  }
-
+  if (valor === null || valor === undefined || valor === "") return null;
+  if (typeof valor === "string") valor = valor.replace(",", ".");
+  
   let num = Number(valor);
-
-  if (isNaN(num)) {
-    return null;
-  }
-
-  if (num > 10 && num <= 100) {
-    num = num / 10;
-  }
-
-  if (num >= 0 && num <= 10) {
-    return num;
-  }
-
+  if (isNaN(num)) return null;
+  if (num > 10 && num <= 100) num = num / 10;
+  if (num >= 0 && num <= 10) return num;
+  
   return null;
 }
 
-// Formatar exibição
 function formatarExibicao(nota) {
   if (nota === null) return "—";
   return nota.toFixed(1).replace(".", ",");
 }
 
-// Preencher Tabela e Cards
 function carregarBoletim() {
   const corpoTabela = document.getElementById("corpo-tabela");
   corpoTabela.innerHTML = "";
@@ -111,58 +95,35 @@ function carregarBoletim() {
   document.getElementById("card-faltas").textContent = totalFaltasGeral;
   document.getElementById("card-bom-desempenho").textContent = contBomDesempenho;
   document.getElementById("card-atencao").textContent = contAtencao;
-
-  // NOTA: A frequência de 92% abaixo é apenas demonstrativa/fictícia nesta versão.
 }
 
-// Sistema de áudio noturno sintético (vento e grilos) usando Web Audio API
-let audioCtx = null;
-let somTocando = false;
-
-function alternarSonsNoturnos() {
-  const btn = document.getElementById("btn-som");
-
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-
-  if (!somTocando) {
-    audioCtx.resume();
+// SORTEIO DE 20% DE CHANCE DE CHOVER NO CARREGAMENTO
+function sortearClima() {
+  const chance = Math.random();
+  if (chance < 0.20) { // 20% de chance de chover
+    const camadaChuva = document.getElementById("camada-chuva");
+    const camadaRaio = document.getElementById("camada-raio");
     
-    // Gerar ruído de vento suave
-    const bufferSize = audioCtx.sampleRate * 2;
-    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const output = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      output[i] = Math.random() * 2 - 1;
+    camadaChuva.style.display = "block";
+    camadaRaio.style.display = "block";
+
+    for (let i = 0; i < 45; i++) {
+      const pingo = document.createElement("div");
+      pingo.className = "pingo-chuva";
+      pingo.style.left = Math.random() * 100 + "vw";
+      pingo.style.animationDelay = Math.random() * 0.8 + "s";
+      pingo.style.animationDuration = (0.5 + Math.random() * 0.4) + "s";
+      camadaChuva.appendChild(pingo);
     }
 
-    const whiteNoise = audioCtx.createBufferSource();
-    whiteNoise.buffer = noiseBuffer;
-    whiteNoise.loop = true;
-
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 300;
-
-    const gain = audioCtx.createGain();
-    gain.gain.value = 0.05;
-
-    whiteNoise.connect(filter);
-    filter.connect(gain);
-    gain.connect(audioCtx.destination);
-    whiteNoise.start();
-
-    btn.textContent = "🔇 Pausar Sons da Noite";
-    somTocando = true;
-  } else {
-    audioCtx.suspend();
-    btn.textContent = "🔊 Ativar Sons da Noite";
-    somTocando = false;
+    setInterval(() => {
+      if (Math.random() < 0.3) {
+        camadaRaio.classList.add("animar-raio");
+        setTimeout(() => camadaRaio.classList.remove("animar-raio"), 350);
+      }
+    }, 4500);
   }
 }
 
-document.getElementById("btn-som").addEventListener("click", alternarSonsNoturnos);
-
-// Iniciar a aplicação
 carregarBoletim();
+sortearClima();
