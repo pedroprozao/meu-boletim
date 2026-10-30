@@ -1,159 +1,94 @@
-/* Resets Globais */
-* {
+/* ==========================================================================
+   BOLETIM DIGITAL - ARQUITETURA DE ESTILO NOTURNO E CENA 3D COMPLETA
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIÁVEIS GLOBAIS E PALETA ANATÔMICA/ATMOSFÉRICA
+   -------------------------------------------------------------------------- */
+:root {
+  --sky-top: #020409;
+  --sky-mid: #060c18;
+  --sky-glow: #0e1a2d;
+  --sky-horizon: #162842;
+  --moon-core: #ffffff;
+  --moon-surface: #e2e8f0;
+  --moon-shadow-1: #94a3b8;
+  --moon-shadow-2: #64748b;
+  --moon-crater: #475569;
+  --tree-bark-dark: #0f0a06;
+  --tree-bark-mid: #1c140d;
+  --tree-bark-light: #2c2016;
+  --leaf-dark: #040d07;
+  --leaf-mid: #0b1f12;
+  --leaf-light: #163a21;
+  --grass-dark: #051209;
+  --grass-mid: #0d2816;
+  --grass-light: #184225;
+  --skin-light: #f5c4a5;
+  --skin-mid: #e2a581;
+  --skin-dark: #be7b55;
+  --skin-shadow: #985733;
+  --skin-knuckle: #cd8761;
+  --nail-color: rgba(255, 235, 225, 0.5);
+  --paper-bg: #fdfbf7;
+  --paper-line: #e8e2d2;
+  --paper-margin: rgba(239, 68, 68, 0.15);
+  --paper-border: #d2c8b4;
+  --text-main: #1e2530;
+  --text-muted: #5a6578;
+  --text-dark: #0f172a;
+  --status-good: #15803d;
+  --status-good-bg: #dcfce7;
+  --status-warn: #b91c1c;
+  --status-warn-bg: #fee2e2;
+  --status-neutral: #64748b;
+}
+
+/* Reset Global */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  width: 100%;
+  height: 100%;
 }
 
 body {
-  background: radial-gradient(circle at 75% 15%, #132035 0%, #080e1a 50%, #03060d 100%);
-  color: #1e2530;
+  width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
+  background: radial-gradient(ellipse at 78% 12%, var(--sky-horizon) 0%, var(--sky-glow) 35%, var(--sky-mid) 70%, var(--sky-top) 100%);
+  color: var(--text-main);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px 15px 120px 15px;
   position: relative;
-  overflow-x: hidden;
 }
 
-/* =======================================
-   ESTRELA E LUA REALISTA
-   ======================================= */
-.sky-container {
+/* --------------------------------------------------------------------------
+   2. AMBIENTE NOTURNO E ATMOSFERA
+   -------------------------------------------------------------------------- */
+.luz-ambiente-noturna {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  background: radial-gradient(circle at 78% 15%, rgba(147, 197, 253, 0.14) 0%, transparent 60%);
   pointer-events: none;
   z-index: 1;
 }
 
-.estrelas-camada1 {
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(1.5px 1.5px at 30px 40px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 180px 90px, #dbeaf0, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 320px 150px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 500px 70px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(1.5px 1.5px at 750px 110px, #ffffff, rgba(0,0,0,0));
-  background-repeat: repeat;
-  background-size: 1000px 400px;
-  opacity: 0.8;
-}
-
-.lua-realista-3d {
-  position: absolute;
-  top: 30px;
-  right: 60px;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 32% 32%, #ffffff 0%, #e2e8f0 35%, #94a3b8 70%, #64748b 100%);
-  box-shadow: 0 0 35px rgba(255, 255, 255, 0.9), 0 0 90px rgba(147, 197, 253, 0.45);
-  overflow: hidden;
-}
-
-.cratera {
-  position: absolute;
-  background: rgba(71, 85, 105, 0.38);
-  border-radius: 50%;
-  box-shadow: inset 3px 3px 6px rgba(3, 6, 13, 0.75);
-}
-
-.c1 { width: 32px; height: 32px; top: 20px; left: 26px; }
-.c2 { width: 18px; height: 18px; top: 62px; left: 20px; }
-.c3 { width: 36px; height: 36px; top: 52px; left: 56px; }
-.c4 { width: 14px; height: 14px; top: 18px; left: 68px; }
-.c5 { width: 12px; height: 12px; top: 92px; left: 45px; }
-
-/* =======================================
-   ESTRUTURA DA ÁRVORE DO GOOGLE (VERSÃO NOTURNA)
-   ======================================= */
-.arvore-cenario {
-  position: fixed;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 500px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.tronco-principal {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 55px;
-  height: 280px;
-  background: linear-gradient(180deg, #18110b 0%, #0d0906 100%);
-  border-radius: 12px 12px 0 0;
-  box-shadow: inset -6px 0 12px rgba(0,0,0,0.8);
-}
-
-.galho {
-  position: absolute;
-  background: #120d08;
-  border-radius: 10px;
-}
-
-.g-esq {
-  width: 140px;
-  height: 18px;
-  bottom: 180px;
-  left: 170px;
-  transform: rotate(-30deg);
-}
-
-.g-dir {
-  width: 150px;
-  height: 18px;
-  bottom: 200px;
-  right: 160px;
-  transform: rotate(25deg);
-}
-
-.copa-folhas {
-  position: absolute;
-  background: radial-gradient(circle at 40% 40%, #15331e 0%, #0b1f12 60%, #050d07 100%);
-  border-radius: 50%;
-  box-shadow: inset -10px -10px 25px rgba(0,0,0,0.7), 0 10px 20px rgba(0,0,0,0.5);
-  animation: balancoArvore 5s infinite ease-in-out alternate;
-}
-
-.c-topo { width: 320px; height: 240px; top: 20px; left: 140px; }
-.c-esq { width: 260px; height: 200px; top: 100px; left: 40px; }
-.c-dir { width: 270px; height: 210px; top: 90px; right: 40px; }
-.c-baixo { width: 350px; height: 180px; top: 160px; left: 125px; }
-
-@keyframes balancoArvore {
-  0% { transform: rotate(0deg) skewX(0deg); }
-  100% { transform: rotate(2deg) skewX(1deg); }
-}
-
-/* =======================================
-   CAMPO DE GRAMA AMPLO (ESTILO GOOGLE)
-   ======================================= */
-.campo-gramado-amplo {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: 120px;
-  background: linear-gradient(180deg, #0d2113 0%, #06120a 100%);
-  border-top: 3px solid #14331d;
-  pointer-events: none;
-  z-index: 3;
-}
-
-/* =======================================
-   CHUVA E VENTO
-   ======================================= */
+/* --------------------------------------------------------------------------
+   3. CHUVA E RELÂMPAGOS (20% DE CHANCE)
+   -------------------------------------------------------------------------- */
 .chuva-container {
   position: fixed;
   top: 0;
@@ -168,16 +103,16 @@ body {
 
 .pingo-chuva {
   position: absolute;
-  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.7));
-  width: 1px;
-  height: 40px;
-  opacity: 0.65;
-  animation: cairChuva 0.75s infinite linear;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.75));
+  width: 1.2px;
+  height: 42px;
+  opacity: 0.7;
+  animation: cairChuva 0.7s infinite linear;
 }
 
 @keyframes cairChuva {
-  0% { transform: translateY(-100px); }
-  100% { transform: translateY(110vh); }
+  0% { transform: translateY(-100px) translateX(0); }
+  100% { transform: translateY(110vh) translateX(-25px); }
 }
 
 .raio-flash {
@@ -186,7 +121,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.35);
   pointer-events: none;
   z-index: 2;
   opacity: 0;
@@ -199,10 +134,305 @@ body {
 
 @keyframes flashRaio {
   0% { opacity: 0; }
-  50% { opacity: 0.8; }
+  25% { opacity: 0.9; }
+  50% { opacity: 0.2; }
+  75% { opacity: 0.65; }
   100% { opacity: 0; }
 }
 
+/* --------------------------------------------------------------------------
+   4. CÉU NOTURNO, ESTRELAS E NEBLINA
+   -------------------------------------------------------------------------- */
+.sky-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.neblina-noturna {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.025), transparent);
+  pointer-events: none;
+}
+
+.n1 { top: 10%; left: -50%; animation: moverNeblina 28s infinite linear; }
+.n2 { top: 45%; left: -80%; animation: moverNeblina 38s infinite linear; }
+
+@keyframes moverNeblina {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+.estrelas-camada1 {
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 30px 40px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 150px 90px, #dbeaf0, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 280px 160px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 420px 50px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 600px 120px, #93c5fd, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 780px 70px, #ffffff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 1100px 400px;
+  opacity: 0.85;
+  animation: piscarEstrelas1 4s infinite alternate ease-in-out;
+}
+
+.estrelas-camada2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 80px 140px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2.5px 2.5px at 230px 60px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 500px 150px, #bfdbfe, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 710px 30px, #ffffff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 1200px 500px;
+  opacity: 0.5;
+  animation: piscarEstrelas2 6s infinite alternate ease-in-out;
+}
+
+.estrelas-camada3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 120px 220px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 350px 110px, #e0f2fe, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 620px 80px, #ffffff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 1300px 450px;
+  opacity: 0.6;
+}
+
+@keyframes piscarEstrelas1 { 0% { opacity: 0.4; } 100% { opacity: 0.95; } }
+@keyframes piscarEstrelas2 { 0% { opacity: 0.7; } 100% { opacity: 0.25; } }
+
+/* --------------------------------------------------------------------------
+   5. LUA HIPER-REALISTA EM CSS 3D
+   -------------------------------------------------------------------------- */
+.lua-realista-3d {
+  position: absolute;
+  top: 30px;
+  right: 60px;
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 32%, var(--moon-core) 0%, var(--moon-surface) 35%, var(--moon-shadow-1) 70%, var(--moon-shadow-2) 100%);
+  box-shadow: 
+    0 0 35px rgba(255, 255, 255, 0.9),
+    0 0 90px rgba(147, 197, 253, 0.45),
+    0 0 180px rgba(147, 197, 253, 0.22),
+    inset -15px -15px 30px rgba(2, 4, 9, 0.8);
+  overflow: hidden;
+  animation: auraLua 5s infinite alternate ease-in-out;
+}
+
+@keyframes auraLua {
+  0% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 75px rgba(147, 197, 253, 0.35); }
+  100% { box-shadow: 0 0 50px rgba(255, 255, 255, 1), 0 0 110px rgba(147, 197, 253, 0.55); }
+}
+
+.lua-terminador {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(125deg, transparent 42%, rgba(2, 4, 9, 0.55) 82%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.cratera {
+  position: absolute;
+  background: rgba(71, 85, 105, 0.4);
+  border-radius: 50%;
+  box-shadow: inset 3px 3px 6px rgba(2, 4, 9, 0.8), 1px 1px 2px rgba(255, 255, 255, 0.45);
+}
+
+.c1 { width: 36px; height: 36px; top: 22px; left: 30px; }
+.c2 { width: 22px; height: 22px; top: 72px; left: 24px; }
+.c3 { width: 42px; height: 42px; top: 58px; left: 64px; }
+.c4 { width: 16px; height: 16px; top: 20px; left: 78px; }
+.c5 { width: 14px; height: 14px; top: 105px; left: 52px; }
+.c6 { width: 28px; height: 16px; top: 90px; left: 86px; transform: rotate(-28deg); }
+.c7 { width: 18px; height: 18px; top: 42px; left: 12px; }
+
+.brilho-superficie {
+  position: absolute;
+  top: 12px;
+  left: 22px;
+  width: 42px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.35);
+  filter: blur(8px);
+  border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   6. A ÁRVORE NOTURNA DO GOOGLE EM CSS 3D
+   -------------------------------------------------------------------------- */
+.arvore-cenario {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 550px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.tronco-principal {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 65px;
+  height: 300px;
+  background: linear-gradient(180deg, var(--tree-bark-light) 0%, var(--tree-bark-mid) 50%, var(--tree-bark-dark) 100%);
+  border-radius: 16px 16px 0 0;
+  box-shadow: inset -8px 0 16px rgba(0,0,0,0.85);
+}
+
+.tronco-raiz-esq {
+  position: absolute;
+  bottom: 0;
+  left: 42%;
+  width: 40px;
+  height: 80px;
+  background: var(--tree-bark-dark);
+  border-radius: 20px 0 0 0;
+  transform: rotate(-20deg);
+}
+
+.tronco-raiz-dir {
+  position: absolute;
+  bottom: 0;
+  right: 42%;
+  width: 40px;
+  height: 80px;
+  background: var(--tree-bark-dark);
+  border-radius: 0 20px 0 0;
+  transform: rotate(20deg);
+}
+
+.textura-casca {
+  position: absolute;
+  background: rgba(0,0,0,0.4);
+  width: 4px;
+  border-radius: 2px;
+}
+
+.c1 { height: 120px; bottom: 60px; left: 49%; }
+.c2 { height: 90px; bottom: 100px; left: 52%; }
+
+.galho {
+  position: absolute;
+  background: var(--tree-bark-mid);
+  border-radius: 10px;
+  box-shadow: inset -3px -3px 8px rgba(0,0,0,0.8);
+}
+
+.g-esq-baixo { width: 160px; height: 20px; bottom: 190px; left: 190px; transform: rotate(-28deg); }
+.g-esq-alto { width: 130px; height: 16px; bottom: 250px; left: 220px; transform: rotate(-18deg); }
+.g-dir-baixo { width: 170px; height: 20px; bottom: 210px; right: 180px; transform: rotate(24deg); }
+.g-dir-alto { width: 120px; height: 15px; bottom: 270px; right: 220px; transform: rotate(15deg); }
+
+.copa-folhas {
+  position: absolute;
+  background: radial-gradient(circle at 40% 35%, var(--leaf-light) 0%, var(--leaf-mid) 55%, var(--leaf-dark) 100%);
+  border-radius: 50%;
+  box-shadow: inset -12px -12px 30px rgba(0,0,0,0.8), 0 12px 25px rgba(0,0,0,0.6);
+  animation: balancoCopa 6s infinite ease-in-out alternate;
+}
+
+.c-fundo1 { width: 380px; height: 280px; top: 10px; left: 160px; }
+.c-fundo2 { width: 320px; height: 240px; top: 50px; left: 80px; }
+.c-meio-esq { width: 300px; height: 220px; top: 110px; left: 30px; }
+.c-meio-dir { width: 310px; height: 230px; top: 100px; right: 30px; }
+.c-topo-centro { width: 280px; height: 210px; top: 0px; left: 210px; }
+.c-frente-baixo { width: 400px; height: 200px; top: 180px; left: 150px; }
+
+@keyframes balancoCopa {
+  0% { transform: rotate(0deg) skewX(0deg); }
+  100% { transform: rotate(2.5deg) skewX(1.5deg); }
+}
+
+/* --------------------------------------------------------------------------
+   7. CAMPO DE GRAMA AMPLIADO NOTURNO
+   -------------------------------------------------------------------------- */
+.campo-gramado-amplo {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 125px;
+  background: linear-gradient(180deg, var(--grass-mid) 0%, var(--grass-dark) 100%);
+  border-top: 3px solid var(--grass-light);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.grama-profunda {
+  position: absolute;
+  top: -10px;
+  width: 100%;
+  height: 15px;
+  background: repeating-linear-gradient(90deg, var(--grass-light) 0px, var(--grass-light) 4px, transparent 4px, transparent 12px);
+}
+
+.camada-fios-grama {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.fio {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 70px solid var(--grass-dark);
+  transform-origin: bottom center;
+  animation: balancoGrama 3.5s infinite ease-in-out alternate;
+}
+
+.g1 { animation-delay: 0s; border-bottom-color: var(--grass-mid); }
+.g2 { animation-delay: 0.6s; height: 85px; }
+.g3 { animation-delay: 1.2s; border-bottom-color: var(--grass-light); }
+.g4 { animation-delay: 1.8s; height: 90px; }
+.g5 { animation-delay: 0.4s; }
+.g6 { animation-delay: 2.1s; height: 80px; border-bottom-color: var(--grass-mid); }
+.g7 { animation-delay: 0.9s; }
+.g8 { animation-delay: 1.5s; height: 95px; border-bottom-color: var(--grass-light); }
+.g9 { animation-delay: 0.3s; }
+
+@keyframes balancoGrama {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg) skewX(8deg); }
+  100% { transform: rotate(-7deg); }
+}
+
+/* --------------------------------------------------------------------------
+   8. VENTO E FOLHAS FLUTUANTES
+   -------------------------------------------------------------------------- */
 .vento-container {
   position: fixed;
   top: 0;
@@ -221,36 +451,39 @@ body {
   animation: moverVento 6.5s infinite linear;
 }
 
-.v1 { top: 20%; left: -35%; width: 55%; }
-.v2 { top: 50%; left: -45%; width: 65%; animation-delay: 2s; }
+.v1 { top: 18%; left: -35%; width: 55%; animation-delay: 0s; }
+.v2 { top: 48%; left: -45%; width: 65%; animation-delay: 2.3s; }
+.v3 { top: 78%; left: -40%; width: 50%; animation-delay: 4.5s; }
 
 @keyframes moverVento {
-  0% { transform: translateX(0); opacity: 0; }
-  50% { opacity: 0.9; }
-  100% { transform: translateX(180vw); opacity: 0; }
+  0% { transform: translateX(0) translateY(0); opacity: 0; }
+  30% { opacity: 0.9; }
+  70% { opacity: 0.9; }
+  100% { transform: translateX(180vw) translateY(50px); opacity: 0; }
 }
 
-/* =======================================
-   MÃOS E PAPEL DO BOLETIM
-   ======================================= */
-.mesa-cenario {
-  position: relative;
-  z-index: 6;
-  width: 100%;
-  max-width: 950px;
-  margin-top: 20px;
+.folha-voando {
+  position: absolute;
+  font-size: 1.6rem;
+  opacity: 0.8;
+  filter: drop-shadow(0 5px 8px rgba(0,0,0,0.6));
+  animation: voarFolha 11s infinite linear;
 }
 
-.folha-papel-real {
-  background: #fdfbf7;
-  color: #1e2530;
-  border-radius: 6px;
-  padding: 45px 40px;
-  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.95);
-  position: relative;
-  border: 1px solid #d2c8b4;
+.f1 { top: 25%; left: -10%; animation-delay: 1s; }
+.f2 { top: 60%; left: -10%; animation-delay: 5.5s; }
+.f3 { top: 40%; left: -10%; animation-delay: 8s; }
+
+@keyframes voarFolha {
+  0% { transform: translateX(0) translateY(0) rotate(0deg); opacity: 0; }
+  20% { opacity: 0.9; }
+  80% { opacity: 0.9; }
+  100% { transform: translateX(120vw) translateY(140px) rotate(720deg); opacity: 0; }
 }
 
+/* --------------------------------------------------------------------------
+   9. MÃOS ANATÔMICAS EM CSS 3D
+   -------------------------------------------------------------------------- */
 .mao-anatomica {
   position: absolute;
   bottom: -45px;
@@ -260,8 +493,15 @@ body {
   height: 120px;
 }
 
-.mao-esquerda { left: -35px; transform: rotate(-12deg); }
-.mao-direita { right: -35px; transform: scaleX(-1) rotate(-12deg); }
+.mao-esquerda {
+  left: -35px;
+  transform: rotate(-12deg);
+}
+
+.mao-direita {
+  right: -35px;
+  transform: scaleX(-1) rotate(-12deg);
+}
 
 .braco-pulso {
   position: absolute;
@@ -269,9 +509,10 @@ body {
   left: 20px;
   width: 80px;
   height: 90px;
-  background: #be7b55;
+  background: linear-gradient(135deg, var(--skin-shadow) 0%, var(--skin-mid) 60%, var(--skin-light) 100%);
   border-radius: 20px;
   transform: rotate(-25deg);
+  box-shadow: inset -6px -6px 14px rgba(0,0,0,0.4);
 }
 
 .palma-base {
@@ -280,39 +521,275 @@ body {
   left: 15px;
   width: 90px;
   height: 75px;
-  background: #e2a581;
+  background: radial-gradient(circle at 40% 40%, var(--skin-light) 0%, var(--skin-mid) 60%, var(--skin-shadow) 100%);
   border-radius: 25px;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.6);
 }
 
 .dedo-completo {
   position: absolute;
-  background: #f5c4a5;
+  background: linear-gradient(180deg, var(--skin-light) 0%, var(--skin-mid) 50%, var(--skin-shadow) 100%);
   border-radius: 12px;
   box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.45);
 }
 
-.polegar { width: 30px; height: 68px; bottom: 25px; left: 65px; transform: rotate(28deg); }
-.indicador { width: 24px; height: 78px; bottom: 40px; left: 38px; transform: rotate(10deg); }
-.medio { width: 24px; height: 84px; bottom: 42px; left: 12px; transform: rotate(-2deg); }
-.anelar { width: 22px; height: 76px; bottom: 35px; left: -10px; transform: rotate(-15deg); }
-.minimo { width: 20px; height: 62px; bottom: 22px; left: -28px; transform: rotate(-28deg); }
+.dobra {
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  width: 70%;
+  height: 2px;
+  background: var(--skin-knuckle);
+  border-radius: 2px;
+  opacity: 0.6;
+}
 
-/* Conteúdo do Boletim */
-.cabecalho { text-align: center; margin-bottom: 30px; border-bottom: 2px dashed #1e2530; padding-bottom: 15px; }
-.cabecalho h1 { font-size: 2.3rem; }
-.subtitulo { color: #5a6578; font-size: 1.1rem; }
+.unha {
+  position: absolute;
+  top: 4px;
+  left: 20%;
+  width: 60%;
+  height: 12px;
+  background: var(--nail-color);
+  border-radius: 6px 6px 3px 3px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.8);
+}
 
-.cards-resumo { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
-.card { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 15px; text-align: center; }
-.card p { font-size: 1.5rem; font-weight: bold; }
+.polegar { width: 30px; height: 68px; bottom: 25px; left: 65px; transform: rotate(28deg); z-index: 20; }
+.indicador { width: 24px; height: 78px; bottom: 40px; left: 38px; transform: rotate(10deg); z-index: 19; }
+.medio { width: 24px; height: 84px; bottom: 42px; left: 12px; transform: rotate(-2deg); z-index: 18; }
+.anelar { width: 22px; height: 76px; bottom: 35px; left: -10px; transform: rotate(-15deg); z-index: 17; }
+.minimo { width: 20px; height: 62px; bottom: 22px; left: -28px; transform: rotate(-28deg); z-index: 16; }
 
-.tabela-container { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; background: #ffffff; border-radius: 8px; overflow: hidden; }
-th, td { padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; }
-th { background-color: #1e2530; color: #ffffff; }
+/* --------------------------------------------------------------------------
+   10. CENÁRIO CENTRAL E FOLHA DE PAPEL
+   -------------------------------------------------------------------------- */
+.mesa-cenario {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  max-width: 950px;
+  margin-top: 10px;
+}
 
-.situacao-bom { color: #15803d; font-weight: bold; }
-.situacao-atencao { color: #b91c1c; font-weight: bold; }
+.folha-papel-real {
+  background: var(--paper-bg);
+  background-image: 
+    linear-gradient(90deg, var(--paper-margin) 1px, transparent 1px),
+    repeating-linear-gradient(var(--paper-bg) 0px, var(--paper-bg) 27px, var(--paper-line) 28px);
+  background-size: 100% 100%, 100% 28px;
+  color: var(--text-main);
+  border-radius: 6px;
+  padding: 50px 45px;
+  box-shadow: 
+    0 35px 80px rgba(0, 0, 0, 0.95),
+    0 12px 30px rgba(0, 0, 0, 0.75),
+    inset 0 0 120px rgba(180, 160, 120, 0.12);
+  position: relative;
+  border: 1px solid var(--paper-border);
+  transform: rotate(-0.5deg);
+  transition: transform 0.3s ease;
+}
 
-.painel-audio { position: fixed; bottom: 25px; left: 25px; z-index: 30; }
-.btn-audio { background: #1e2530; color: #ffffff; border: none; padding: 12px 20px; border-radius: 20px; cursor: pointer; }
+.folha-papel-real:hover {
+  transform: rotate(0deg);
+}
+
+.luz-lua-incidente {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 88% 8%, rgba(255, 255, 255, 0.25) 0%, transparent 65%);
+  pointer-events: none;
+  border-radius: 6px;
+}
+
+.dobra-canto {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-width: 0 42px 42px 0;
+  border-style: solid;
+  border-color: #c4baa5 var(--sky-mid);
+  box-shadow: -4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   11. CONTEÚDO DO BOLETIM (CABEÇALHO, CARDS E TABELA)
+   -------------------------------------------------------------------------- */
+.cabecalho {
+  text-align: center;
+  margin-bottom: 32px;
+  border-bottom: 2px dashed var(--text-main);
+  padding-bottom: 18px;
+}
+
+.brasao-escola {
+  font-size: 2.5rem;
+  margin-bottom: 4px;
+}
+
+.cabecalho h1 {
+  font-size: 2.5rem;
+  color: var(--text-main);
+  letter-spacing: 1.5px;
+  font-weight: 800;
+}
+
+.subtitulo {
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.cards-resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.card h3 {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.card p {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.status-frequencia {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--status-good);
+  margin-top: 4px;
+  font-weight: 700;
+}
+
+.tabela-container {
+  overflow-x: auto;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+th, td {
+  padding: 14px 12px;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+}
+
+th {
+  background-color: var(--text-main);
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+th:first-child, td:first-child {
+  text-align: left;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+tr:hover {
+  background-color: #f8fafc;
+}
+
+.situacao-bom {
+  color: var(--status-good);
+  background-color: var(--status-good-bg);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.situacao-atencao {
+  color: var(--status-warn);
+  background-color: var(--status-warn-bg);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.situacao-indisponivel {
+  color: var(--status-neutral);
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+   12. PAINEL DE ÁUDIO NOTURNO
+   -------------------------------------------------------------------------- */
+.painel-audio {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  z-index: 30;
+}
+
+.btn-audio {
+  background: var(--text-main);
+  color: #ffffff;
+  border: 1px solid #334155;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  transition: all 0.2s ease;
+}
+
+.btn-audio:hover {
+  transform: scale(1.06);
+  background: var(--text-dark);
+}
+
+/* --------------------------------------------------------------------------
+   13. ADAPTAÇÕES RESPONSIVAS
+   -------------------------------------------------------------------------- */
+@media (max-width: 680px) {
+  body { padding: 20px 10px 90px 10px; }
+  .folha-papel-real { padding: 25px 15px; }
+  .lua-realista-3d { width: 80px; height: 80px; top: 15px; right: 20px; }
+  .arvore-cenario { transform: translateX(-50%) scale(0.65); bottom: -20px; }
+  .mao-anatomica { transform: scale(0.6); bottom: -50px; }
+  .mao-esquerda { left: -45px; }
+  .mao-direita { right: -45px; }
+  th, td { padding: 10px 6px; font-size: 0.85rem; }
+}
