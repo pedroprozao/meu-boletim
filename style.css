@@ -1,39 +1,52 @@
 /* ==========================================================================
-   BOLETIM DIGITAL - ARQUITETURA DE ESTILO COMPLETA (CSS EXPANDIDO)
+   SISTEMA DE ESTILIZAÇÃO AVANÇADO - BOLETIM DIGITAL NOTURNO
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. VARIÁVEIS GLOBAIS E PALETA DE CORES
+   1. VARIÁVEIS DE AMBIENTE, PALETA E GEOMETRIA
    -------------------------------------------------------------------------- */
 :root {
+  /* Cores do Céu e Iluminação Atmosférica */
   --sky-top: #020409;
   --sky-mid: #060c18;
   --sky-glow: #0e1a2d;
   --sky-horizon: #162842;
+  
+  /* Cores da Lua e Sombras */
   --moon-core: #ffffff;
   --moon-surface: #e2e8f0;
   --moon-shadow-1: #94a3b8;
   --moon-shadow-2: #64748b;
   --moon-crater: #475569;
+  
+  /* Cores da Árvore e Casca */
   --tree-bark-dark: #0f0a06;
   --tree-bark-mid: #1c140d;
   --tree-bark-light: #2c2016;
   --leaf-dark: #040d07;
   --leaf-mid: #0b1f12;
   --leaf-light: #163a21;
+  
+  /* Cores do Gramado */
   --grass-dark: #051209;
   --grass-mid: #0d2816;
   --grass-light: #184225;
+  
+  /* Cores da Pele Anatomica das Mãos */
   --skin-light: #f5c4a5;
   --skin-mid: #e2a581;
   --skin-dark: #be7b55;
   --skin-shadow: #985733;
   --skin-knuckle: #cd8761;
   --nail-color: rgba(255, 235, 225, 0.5);
+  
+  /* Cores do Papel Pautado */
   --paper-bg: #fdfbf7;
   --paper-line: #e8e2d2;
   --paper-margin: rgba(239, 68, 68, 0.15);
   --paper-border: #d2c8b4;
+  
+  /* Cores de Texto e Status */
   --text-main: #1e2530;
   --text-muted: #5a6578;
   --text-dark: #0f172a;
@@ -44,6 +57,9 @@
   --status-neutral: #64748b;
 }
 
+/* --------------------------------------------------------------------------
+   2. RESET GLOBAL E CONFIGURAÇÃO DA TELA
+   -------------------------------------------------------------------------- */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -72,7 +88,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   2. AMBIENTE NOTURNO E CHUVA DINÂMICA
+   3. ILUMINAÇÃO AMBIENTAL E ATMOSFERA NOTURNA
    -------------------------------------------------------------------------- */
 .luz-ambiente-noturna {
   position: fixed;
@@ -85,6 +101,9 @@ body {
   z-index: 1;
 }
 
+/* --------------------------------------------------------------------------
+   4. SISTEMA DE CHUVA E RELÂMPAGOS (20% DE CHANCE VIA JS)
+   -------------------------------------------------------------------------- */
 .chuva-container {
   position: fixed;
   top: 0;
@@ -137,7 +156,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   3. CÉU E ESTRELAS
+   5. CÉU NOTURNO, NEBLINA E ESTRELAS MULTICAMADAS
    -------------------------------------------------------------------------- */
 .sky-container {
   position: fixed;
@@ -218,7 +237,7 @@ body {
 @keyframes piscarEstrelas2 { 0% { opacity: 0.7; } 100% { opacity: 0.25; } }
 
 /* --------------------------------------------------------------------------
-   4. LUA REALISTA 3D
+   6. LUA REALISTA EM CSS 3D
    -------------------------------------------------------------------------- */
 .lua-realista-3d {
   position: absolute;
@@ -280,7 +299,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   5. ÁRVORE NOTURNA ESTILO GOOGLE
+   7. ÁRVORE NOTURNA NO ESTILO DA REFERÊNCIA GOOGLE
    -------------------------------------------------------------------------- */
 .arvore-cenario {
   position: fixed;
@@ -370,7 +389,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   6. CAMPO DE GRAMA AMPLIADO
+   8. CAMPO DE GRAMADO AMPLO E FIOS DE GRAMA
    -------------------------------------------------------------------------- */
 .campo-gramado-amplo {
   position: fixed;
@@ -431,7 +450,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   7. VENTO E PARTICULAS
+   9. ANIMAÇÃO DE VENTO E PARTICULAS DE FOLHAS
    -------------------------------------------------------------------------- */
 .vento-container {
   position: fixed;
@@ -482,7 +501,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   8. MÃOS ANATÔMICAS EM CSS 3D
+   10. MÃOS ANATÔMICAS EM CSS 3D (ESQUERDA E DIREITA)
    -------------------------------------------------------------------------- */
 .mao-anatomica {
   position: absolute;
@@ -562,7 +581,7 @@ body {
 .minimo { width: 20px; height: 62px; bottom: 22px; left: -28px; transform: rotate(-28deg); z-index: 16; }
 
 /* --------------------------------------------------------------------------
-   9. FOLHA DE PAPEL DO BOLETIM
+   11. FOLHA DE PAPEL DO BOLETIM E TEXTURA PAUTADA
    -------------------------------------------------------------------------- */
 .mesa-cenario {
   position: relative;
@@ -617,7 +636,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   10. ESTRUTURA DO BOLETIM (CABEÇALHO, CARDS E TABELA)
+   12. CONTEÚDO DO BOLETIM (CABEÇALHO, CARDS DE RESUMO E TABELA)
    -------------------------------------------------------------------------- */
 .cabecalho {
   text-align: center;
@@ -753,7 +772,7 @@ tr:hover {
 }
 
 /* --------------------------------------------------------------------------
-   11. CONTROLE DE ÁUDIO
+   13. PAINEL DE CONTROLE DE ÁUDIO NOTURNO
    -------------------------------------------------------------------------- */
 .painel-audio {
   position: fixed;
@@ -781,7 +800,7 @@ tr:hover {
 }
 
 /* --------------------------------------------------------------------------
-   12. MEDIA QUERIES (DISPOSITIVOS MÓVEIS)
+   14. RESPONSIVIDADE E ADAPTAÇÕES PARA CELULAR
    -------------------------------------------------------------------------- */
 @media (max-width: 680px) {
   body { padding: 20px 10px 90px 10px; }
