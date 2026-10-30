@@ -23,7 +23,6 @@ function normalizarNota(valor) {
     return null;
   }
 
-  // Converter vírgula para ponto se for texto
   if (typeof valor === "string") {
     valor = valor.replace(",", ".");
   }
@@ -34,12 +33,10 @@ function normalizarNota(valor) {
     return null;
   }
 
-  // Se a nota estiver na escala 0-100, divide por 10
   if (num > 10 && num <= 100) {
     num = num / 10;
   }
 
-  // Verifica se está dentro do limite valido de 0 a 10
   if (num >= 0 && num <= 10) {
     return num;
   }
@@ -47,13 +44,13 @@ function normalizarNota(valor) {
   return null;
 }
 
-// Função para formatar a nota na exibição (ex: 8.2 vira "8,2")
+// Formatar exibição
 function formatarExibicao(nota) {
   if (nota === null) return "—";
   return nota.toFixed(1).replace(".", ",");
 }
 
-// Inicializar a tabela e os cards
+// Preencher Tabela e Cards
 function carregarBoletim() {
   const corpoTabela = document.getElementById("corpo-tabela");
   corpoTabela.innerHTML = "";
@@ -65,12 +62,10 @@ function carregarBoletim() {
   let contAtencao = 0;
 
   dadosBoletim.forEach((item) => {
-    // Normalização das notas
     const n1 = normalizarNota(item.tri1);
     const n2 = normalizarNota(item.tri2);
     const n3 = normalizarNota(item.tri3);
 
-    // Cálculo das notas disponíveis para média
     const notasDisponiveis = [n1, n2, n3].filter((n) => n !== null);
 
     let media = null;
@@ -95,11 +90,9 @@ function carregarBoletim() {
       }
     }
 
-    // Soma das faltas da disciplina
     const totalFaltasDisc = item.faltas.reduce((acc, curr) => acc + curr, 0);
     totalFaltasGeral += totalFaltasDisc;
 
-    // Criar linha na tabela
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${item.disciplina}</td>
@@ -113,7 +106,6 @@ function carregarBoletim() {
     corpoTabela.appendChild(tr);
   });
 
-  // Atualização dos Cards de Resumo
   const mediaGeral = qtdMediasValidas > 0 ? (somaMedias / qtdMediasValidas).toFixed(1).replace(".", ",") : "—";
   document.getElementById("card-media").textContent = mediaGeral;
   document.getElementById("card-faltas").textContent = totalFaltasGeral;
@@ -123,5 +115,54 @@ function carregarBoletim() {
   // NOTA: A frequência de 92% abaixo é apenas demonstrativa/fictícia nesta versão.
 }
 
-// Executa a função ao carregar a página
+// Sistema de áudio noturno sintético (vento e grilos) usando Web Audio API
+let audioCtx = null;
+let somTocando = false;
+
+function alternarSonsNoturnos() {
+  const btn = document.getElementById("btn-som");
+
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  if (!somTocando) {
+    audioCtx.resume();
+    
+    // Gerar ruído de vento suave
+    const bufferSize = audioCtx.sampleRate * 2;
+    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = Math.random() * 2 - 1;
+    }
+
+    const whiteNoise = audioCtx.createBufferSource();
+    whiteNoise.buffer = noiseBuffer;
+    whiteNoise.loop = true;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 300;
+
+    const gain = audioCtx.createGain();
+    gain.gain.value = 0.05;
+
+    whiteNoise.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+    whiteNoise.start();
+
+    btn.textContent = "🔇 Pausar Sons da Noite";
+    somTocando = true;
+  } else {
+    audioCtx.suspend();
+    btn.textContent = "🔊 Ativar Sons da Noite";
+    somTocando = false;
+  }
+}
+
+document.getElementById("btn-som").addEventListener("click", alternarSonsNoturnos);
+
+// Iniciar a aplicação
 carregarBoletim();
