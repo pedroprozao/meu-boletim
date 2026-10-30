@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- Lua Realista Animada -->
+  <!-- Céu Noturno com Lua Realista -->
   <div class="sky-container">
     <div class="lua-realista">
       <div class="cratera c1"></div>
@@ -16,15 +16,24 @@
       <div class="cratera c3"></div>
       <div class="cratera c4"></div>
       <div class="cratera c5"></div>
-      <div class="brilho-lua"></div>
     </div>
   </div>
 
-  <!-- Animação do Vento e Brisa Noturna -->
+  <!-- Animação de Vento no Ar -->
   <div class="vento-container">
     <div class="linha-vento v1"></div>
     <div class="linha-vento v2"></div>
     <div class="linha-vento v3"></div>
+  </div>
+
+  <!-- Campo de Grama Balançando no Vento (Rodapé) -->
+  <div class="gramado">
+    <div class="grama g1"></div>
+    <div class="grama g2"></div>
+    <div class="grama g3"></div>
+    <div class="grama g4"></div>
+    <div class="grama g5"></div>
+    <div class="grama g6"></div>
   </div>
 
   <!-- Painel de Som -->
@@ -32,18 +41,14 @@
     <button id="btn-som" class="btn-audio">🔊 Ativar Sons da Noite</button>
   </div>
 
-  <!-- Cenário do Boletim e Mão -->
+  <!-- Cenário do Boletim na Folha de Papel -->
   <div class="mesa-cenario">
     
-    <!-- Mão Realista em CSS Segurando o Boletim -->
-    <div class="mao-container">
-      <div class="pulso"></div>
-      <div class="palma"></div>
-      <div class="dedo polegar"></div>
-      <div class="dedo indicador"></div>
-      <div class="dedo medio"></div>
-      <div class="dedo anelar"></div>
-    </div>
+    <!-- Mão Esquerda Segurando o Papel -->
+    <div class="mao-container mao-esquerda">✋</div>
+
+    <!-- Mão Direita Segurando o Papel -->
+    <div class="mao-container mao-direita">🤚</div>
 
     <!-- Papel do Boletim -->
     <div class="folha-papel">
@@ -95,7 +100,7 @@
             </tr>
           </thead>
           <tbody id="corpo-tabela">
-            <!-- As linhas serão geradas pelo JavaScript -->
+            <!-- As linhas serão inseridas pelo JavaScript -->
           </tbody>
         </table>
       </main>
