@@ -8,21 +8,25 @@
 </head>
 <body>
 
-  <!-- Sistema Dinâmico de Clima e Relâmpagos (20% de chance) -->
+  <!-- ====================================================================
+       1. CAMADAS ATMOSFÉRICAS E CLIMA DINÂMICO (20% CHANCE DE CHUVA)
+       ==================================================================== -->
   <div id="camada-chuva" class="chuva-container"></div>
   <div id="camada-raio" class="raio-flash"></div>
-
-  <!-- Iluminação e Atmosfera Noturna -->
   <div class="luz-ambiente-noturna"></div>
 
-  <!-- Céu com Estrelas, Neblina e Lua 3D Realista -->
+  <!-- ====================================================================
+       2. CÉU NOTURNO, ESTRELAS MULTICAMADAS E NEBLINA
+       ==================================================================== -->
   <div class="sky-container">
     <div class="neblina-noturna n1"></div>
     <div class="neblina-noturna n2"></div>
+    <div class="neblina-noturna n3"></div>
     <div class="estrelas-camada1"></div>
     <div class="estrelas-camada2"></div>
     <div class="estrelas-camada3"></div>
     
+    <!-- Lua Realista 3D com Crateras e Aura -->
     <div class="lua-realista-3d">
       <div class="lua-terminador"></div>
       <div class="cratera c1"></div>
@@ -36,7 +40,9 @@
     </div>
   </div>
 
-  <!-- A ÁRVORE NOTURNA ESTILO GOOGLE EM CSS 3D -->
+  <!-- ====================================================================
+       3. ÁRVORE NOTURNA ESTILO GOOGLE EM CSS 3D
+       ==================================================================== -->
   <div class="arvore-cenario">
     <div class="tronco-raiz-esq"></div>
     <div class="tronco-raiz-dir"></div>
@@ -48,7 +54,7 @@
     <div class="galho g-dir-baixo"></div>
     <div class="galho g-dir-alto"></div>
     
-    <!-- Copas e Arbustos de Folhas Sombreadas -->
+    <!-- Folhagem e Copas em Camadas -->
     <div class="copa-folhas c-fundo1"></div>
     <div class="copa-folhas c-fundo2"></div>
     <div class="copa-folhas c-meio-esq"></div>
@@ -57,17 +63,22 @@
     <div class="copa-folhas c-frente-baixo"></div>
   </div>
 
-  <!-- Campo de Grama Ampliado Noturno em 3 Camadas -->
+  <!-- ====================================================================
+       4. CAMPO DE GRAMA AMPLIADO NOTURNO
+       ==================================================================== -->
   <div class="campo-gramado-amplo">
     <div class="grama-profunda"></div>
     <div class="camada-fios-grama">
       <div class="fio g1"></div><div class="fio g2"></div><div class="fio g3"></div>
       <div class="fio g4"></div><div class="fio g5"></div><div class="fio g6"></div>
       <div class="fio g7"></div><div class="fio g8"></div><div class="fio g9"></div>
+      <div class="fio g10"></div><div class="fio g11"></div><div class="fio g12"></div>
     </div>
   </div>
 
-  <!-- Vento Flutuante e Folhas Caídas -->
+  <!-- ====================================================================
+       5. VENTO FLUTUANTE E PARTICULAS
+       ==================================================================== -->
   <div class="vento-container">
     <div class="linha-vento v1"></div>
     <div class="linha-vento v2"></div>
@@ -77,15 +88,17 @@
     <div class="folha-voando f3">🌿</div>
   </div>
 
-  <!-- Painel de Som da Noite -->
+  <!-- Painel de Controle Áudio -->
   <div class="painel-audio">
     <button id="btn-som" class="btn-audio">🔊 Ativar Sons da Noite</button>
   </div>
 
-  <!-- Cenário Central: As Duas Mãos Anatômicas e o Boletim em Papel -->
+  <!-- ====================================================================
+       6. CENÁRIO CENTRAL: MÃOS ANATÔMICAS E BOLETIM EM PAPEL
+       ==================================================================== -->
   <div class="mesa-cenario">
     
-    <!-- Mão Esquerda Detalhada em CSS -->
+    <!-- Mão Esquerda Anatômica em CSS -->
     <div class="mao-anatomica mao-esquerda">
       <div class="braco-pulso"></div>
       <div class="palma-base"></div>
@@ -96,7 +109,7 @@
       <div class="dedo-completo minimo"><div class="dobra"></div><div class="unha"></div></div>
     </div>
 
-    <!-- Mão Direita Detalhada em CSS -->
+    <!-- Mão Direita Anatômica em CSS -->
     <div class="mao-anatomica mao-direita">
       <div class="braco-pulso"></div>
       <div class="palma-base"></div>
@@ -159,7 +172,7 @@
             </tr>
           </thead>
           <tbody id="corpo-tabela">
-            <!-- Gerado via JavaScript -->
+            <!-- As 15 disciplinas serão geradas via JavaScript -->
           </tbody>
         </table>
       </main>
