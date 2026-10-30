@@ -8,28 +8,29 @@
 
 body {
   background: radial-gradient(circle at 75% 15%, #1a2332 0%, #090c10 100%);
+  color: #2b2b2b;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px 15px;
+  padding: 40px 20px;
   position: relative;
   overflow-x: hidden;
 }
 
 /* =======================================
-   LUA REALISTA COM ANIMAÇÃO E CRATERAS
+   LUA REALISTA COM ANIMAÇÃO
    ======================================= */
 .sky-container {
   position: fixed;
-  top: 20px;
+  top: 25px;
   right: 40px;
   z-index: 1;
 }
 
 .lua-realista {
-  width: 110px;
-  height: 110px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #ffffff 0%, #dbe3ea 45%, #9aaab8 85%, #607080 100%);
   box-shadow: 
@@ -42,19 +43,10 @@ body {
 }
 
 @keyframes pulsoLua {
-  0% {
-    box-shadow: 
-      0 0 25px rgba(235, 243, 250, 0.7),
-      0 0 50px rgba(138, 180, 248, 0.3);
-  }
-  100% {
-    box-shadow: 
-      0 0 35px rgba(255, 255, 255, 0.9),
-      0 0 80px rgba(138, 180, 248, 0.5);
-  }
+  0% { box-shadow: 0 0 25px rgba(235, 243, 250, 0.7), 0 0 50px rgba(138, 180, 248, 0.3); }
+  100% { box-shadow: 0 0 35px rgba(255, 255, 255, 0.9), 0 0 80px rgba(138, 180, 248, 0.5); }
 }
 
-/* Crateras da Lua */
 .cratera {
   position: absolute;
   background: rgba(80, 95, 110, 0.25);
@@ -62,11 +54,11 @@ body {
   box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.c1 { width: 26px; height: 26px; top: 20px; left: 25px; }
-.c2 { width: 18px; height: 18px; top: 55px; left: 18px; }
-.c3 { width: 32px; height: 32px; top: 45px; left: 55px; }
-.c4 { width: 14px; height: 14px; top: 18px; left: 65px; }
-.c5 { width: 10px; height: 10px; top: 80px; left: 45px; }
+.c1 { width: 22px; height: 22px; top: 15px; left: 20px; }
+.c2 { width: 14px; height: 14px; top: 45px; left: 15px; }
+.c3 { width: 26px; height: 26px; top: 38px; left: 45px; }
+.c4 { width: 12px; height: 12px; top: 12px; left: 52px; }
+.c5 { width: 8px; height: 8px; top: 68px; left: 35px; }
 
 /* =======================================
    ANIMAÇÃO DO VENTO
@@ -101,161 +93,152 @@ body {
 }
 
 /* =======================================
-   CENÁRIO: MESA, MÃO E FOLHA DE PAPEL
+   CENÁRIO: FOLHA DE PAPEL E MÃO
    ======================================= */
 .mesa-cenario {
   position: relative;
   z-index: 4;
   width: 100%;
-  max-width: 920px;
-  margin-top: 40px;
+  max-width: 900px;
 }
 
-/* Folha de Papel do Boletim */
 .folha-papel {
-  background: #fcfbf9;
-  background-image: linear-gradient(#f4f1ea 1px, transparent 1px);
-  background-size: 100% 28px;
-  color: #1c2128;
-  border-radius: 4px;
-  padding: 40px;
+  background: #fdfbf7;
+  color: #1a2332;
+  border-radius: 6px;
+  padding: 35px 30px;
   box-shadow: 
     0 20px 50px rgba(0, 0, 0, 0.8),
     0 2px 6px rgba(0, 0, 0, 0.4);
   position: relative;
-  border: 1px solid #e0dad0;
-  transform: rotate(-0.5deg);
+  border: 1px solid #e2ded5;
 }
 
 .textura-dobra {
   position: absolute;
   top: 0;
   right: 0;
-  border-width: 0 30px 30px 0;
+  border-width: 0 28px 28px 0;
   border-style: solid;
-  border-color: #dcd5c9 #1a2332;
-  box-shadow: -2px 2px 5px rgba(0,0,0,0.3);
+  border-color: #dcd5c9 #090c10;
 }
 
 /* Mão Segurando o Papel */
 .mao-container {
   position: absolute;
-  bottom: -35px;
-  left: -20px;
+  bottom: -30px;
+  left: -25px;
   z-index: 10;
   pointer-events: none;
 }
 
 .pulso {
-  width: 70px;
-  height: 90px;
+  width: 65px;
+  height: 85px;
   background: #dca882;
-  border-radius: 15px;
+  border-radius: 12px;
   transform: rotate(-30deg);
   box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2);
 }
 
 .palma {
-  width: 80px;
-  height: 70px;
+  width: 75px;
+  height: 65px;
   background: #e4b38d;
-  border-radius: 20px;
+  border-radius: 18px;
   position: absolute;
-  top: -20px;
-  left: 10px;
+  top: -18px;
+  left: 8px;
   transform: rotate(-15deg);
 }
 
 .dedo {
   position: absolute;
   background: #eebd97;
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .polegar {
-  width: 28px;
-  height: 65px;
-  top: -45px;
-  left: 45px;
+  width: 26px;
+  height: 60px;
+  top: -42px;
+  left: 40px;
   transform: rotate(25deg);
   z-index: 12;
 }
 
 .indicador {
-  width: 22px;
-  height: 70px;
-  top: -55px;
-  left: 20px;
+  width: 20px;
+  height: 65px;
+  top: -50px;
+  left: 18px;
   transform: rotate(5deg);
   z-index: 11;
 }
 
 .medio {
-  width: 22px;
-  height: 75px;
-  top: -58px;
+  width: 20px;
+  height: 70px;
+  top: -54px;
   left: -2px;
   transform: rotate(-8deg);
   z-index: 9;
 }
 
 .anelar {
-  width: 20px;
-  height: 68px;
-  top: -50px;
-  left: -22px;
+  width: 18px;
+  height: 62px;
+  top: -46px;
+  left: -20px;
   transform: rotate(-20deg);
   z-index: 8;
 }
 
 /* =======================================
-   ESTILOS DO BOLETIM (CONTEÚDO)
+   CABEÇALHO, CARDS E TABELA
    ======================================= */
 .cabecalho {
   text-align: center;
-  margin-bottom: 30px;
-  border-bottom: 2px solid #2b3545;
-  padding-bottom: 15px;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #1a2332;
+  padding-bottom: 12px;
 }
 
 .cabecalho h1 {
-  font-size: 2.2rem;
+  font-size: 2rem;
   color: #1a2332;
-  letter-spacing: 1px;
 }
 
 .subtitulo {
   color: #57606a;
-  font-size: 1.05rem;
+  font-size: 1rem;
   margin-top: 4px;
 }
 
-/* Cards */
 .cards-resumo {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-  margin-bottom: 35px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 30px;
 }
 
 .card {
-  background: #ffffff;
+  background: #f1f3f5;
   border: 1px solid #d0d7de;
-  border-radius: 10px;
-  padding: 16px;
+  border-radius: 8px;
+  padding: 12px;
   text-align: center;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
 
 .card h3 {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #57606a;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .card p {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
   color: #1a2332;
 }
@@ -268,7 +251,6 @@ body {
   font-weight: 600;
 }
 
-/* Tabela */
 .tabela-container {
   overflow-x: auto;
 }
@@ -279,42 +261,30 @@ table {
   background: #ffffff;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 th, td {
-  padding: 12px;
+  padding: 10px 8px;
   text-align: center;
   border-bottom: 1px solid #e1e4e8;
+  font-size: 0.9rem;
 }
 
 th {
   background-color: #1a2332;
   color: #ffffff;
   font-weight: 600;
-  font-size: 0.9rem;
 }
 
 th:first-child, td:first-child {
   text-align: left;
 }
 
-/* Situações */
-.situacao-bom {
-  color: #1a7f37;
-  font-weight: 600;
-}
+.situacao-bom { color: #1a7f37; font-weight: 600; }
+.situacao-atencao { color: #cf222e; font-weight: 600; }
+.situacao-indisponivel { color: #6e7781; }
 
-.situacao-atencao {
-  color: #cf222e;
-  font-weight: 600;
-}
-
-.situacao-indisponivel {
-  color: #6e7781;
-}
-
-/* Botão de Áudio */
 .painel-audio {
   position: fixed;
   bottom: 20px;
@@ -326,34 +296,15 @@ th:first-child, td:first-child {
   background: #1a2332;
   color: #ffffff;
   border: 1px solid #30363d;
-  padding: 12px 20px;
-  border-radius: 25px;
+  padding: 10px 18px;
+  border-radius: 20px;
   cursor: pointer;
   font-weight: 600;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  transition: transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
-.btn-audio:hover {
-  transform: scale(1.05);
-}
-
-/* Responsividade para Celular */
-@media (max-width: 650px) {
-  .folha-papel {
-    padding: 20px 15px;
-  }
-  .lua-realista {
-    width: 65px;
-    height: 65px;
-  }
-  .sky-container {
-    top: 10px;
-    right: 15px;
-  }
-  .mao-container {
-    transform: scale(0.6);
-    bottom: -45px;
-    left: -35px;
-  }
+@media (max-width: 600px) {
+  .folha-papel { padding: 20px 12px; }
+  .sky-container { top: 10px; right: 15px; }
+  .mao-container { transform: scale(0.55); bottom: -40px; left: -35px; }
 }
