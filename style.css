@@ -1,0 +1,186 @@
+/* Configurações gerais e fundo noturno */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #121619; /* Cinza-escuro noturno */
+  color: #e0e6ed;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Efeito da Lua no céu */
+.lua {
+  position: fixed;
+  top: 30px;
+  right: 40px;
+  width: 70px;
+  height: 70px;
+  background: #e2e8f0;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(186, 215, 242, 0.5), 0 0 40px rgba(186, 215, 242, 0.2);
+  z-index: 1;
+}
+
+/* Animação suave de vento passando */
+.vento-bg {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(186, 215, 242, 0.05), transparent);
+  animation: ventoAnimacao 8s infinite linear;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes ventoAnimacao {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+/* Container principal com visual de papel/boletim */
+.container {
+  width: 100%;
+  max-width: 900px;
+  background-color: #1e242b; /* Papel escuro elegante */
+  border: 1px solid #2e3842;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 3;
+}
+
+/* Cabeçalho */
+.cabecalho {
+  text-align: center;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #2e3842;
+  padding-bottom: 15px;
+}
+
+.cabecalho h1 {
+  color: #ba3d7f2; /* Azul-suave nos destaques */
+  color: #8ab4f8;
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.subtitulo {
+  color: #9aa0a6;
+  font-size: 1rem;
+}
+
+/* Grid para os Cards de Resumo */
+.cards-resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+/* Cards com bordas arredondadas e minimalistas */
+.card {
+  background-color: #27303a;
+  border: 1px solid #364350;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card h3 {
+  font-size: 0.85rem;
+  color: #9aa0a6;
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #8ab4f8; /* Destaque em azul suave */
+}
+
+.status-frequencia {
+  display: block;
+  font-size: 0.75rem;
+  color: #81c995;
+  margin-top: 4px;
+}
+
+/* Tabela Responsiva */
+.tabela-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+th, td {
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 1px solid #2e3842;
+}
+
+th {
+  background-color: #27303a;
+  color: #8ab4f8;
+  font-weight: 600;
+}
+
+th:first-child, td:first-child {
+  text-align: left;
+}
+
+/* Destaques das Situações */
+.situacao-bom {
+  color: #81c995;
+  font-weight: 600;
+}
+
+.situacao-atencao {
+  color: #f28b82;
+  font-weight: 600;
+}
+
+.situacao-indisponivel {
+  color: #9aa0a6;
+}
+
+/* Adaptação para celular */
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+  }
+
+  .lua {
+    width: 40px;
+    height: 40px;
+    top: 15px;
+    right: 15px;
+  }
+
+  th, td {
+    padding: 8px 5px;
+    font-size: 0.85rem;
+  }
+}
