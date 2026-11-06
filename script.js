@@ -1,5 +1,16 @@
-// Dados brutos fictícios do 9º Ano
-const dadosBoletim = [
+// ============================================================================
+// CONFIGURAÇÃO FIXA DO ALUNO — NÃO ALTERAR PELA PÁGINA
+// ============================================================================
+const CONFIG_ALUNO = {
+  turma: "9B",
+  numeroChamada: 30,
+  apiUrl: "https://boletim-api.profbt.com.br"
+};
+
+// ============================================================================
+// DADOS BRUTOS FICTÍCIOS DO 9º ANO (PRESERVADOS DO PROJETO ORIGINAL)
+// ============================================================================
+const dadosBoletimLocal = [
   { disciplina: "Língua Portuguesa", tri1: 78, tri2: "8,2", tri3: 8.6, faltas: [2, 2, 1] },
   { disciplina: "Matemática", tri1: 55, tri2: "5,4", tri3: null, faltas: [3, 2, 2] },
   { disciplina: "Ciências", tri1: 84, tri2: 7.9, tri3: "8,3", faltas: [1, 1, 1] },
@@ -17,16 +28,26 @@ const dadosBoletim = [
   { disciplina: "Práticas Experimentais", tri1: 64, tri2: "6,6", tri3: 7.0, faltas: [1, 1, 1] }
 ];
 
-// Função para normalizar notas na escala de 0 a 10
+// ============================================================================
+// ESTADO EM MEMÓRIA (PIN NUNCA É PERSISTIDO)
+// ============================================================================
+let pinSessao = null;           // PIN mantido apenas em memória
+let dadosAtuais = null;         // dados exibidos no momento (local ou API)
+let modoEdicao = false;
+
+// ============================================================================
+// NORMALIZAÇÃO DE NOTAS (DADOS ANTIGOS DO PROJETO)
+// Aceita: 75 → 7,5 | 82 → 8,2 | 100 → 10 | "8,5" → 8,5 | 8.5 → 8,5 | null
+// ============================================================================
 function normalizarNota(valor) {
   if (valor === null || valor === undefined || valor === "") return null;
   if (typeof valor === "string") valor = valor.replace(",", ".");
-  
+
   let num = Number(valor);
   if (isNaN(num)) return null;
   if (num > 10 && num <= 100) num = num / 10;
   if (num >= 0 && num <= 10) return num;
-  
+
   return null;
 }
 
@@ -35,6 +56,39 @@ function formatarExibicao(nota) {
   return nota.toFixed(1).replace(".", ",");
 }
 
+// ============================================================================
+// VALIDAÇÃO DE NOTA DIGITADA PELO ALUNO NO EDITOR
+// Aceita: número 0–10, ponto ou vírgula decimal, ou vazio (→ null)
+// Rejeita: 75, 82, 100, -1, 11, abc
+// ============================================================================
+function validarNotaEdicao(texto) {
+  const bruto = String(texto).trim();
+  if (bruto === "") return { ok: true, valor: null };
+  const normalizado = bruto.replace(",", ".");
+  // Aceita somente formato numérico simples (sem letras, sem múltiplos pontos)
+  if (!/^\d+(\.\d+)?$/.test(normalizado)) return { ok: false };
+  const num = Number(normalizado);
+  if (!isFinite(num)) return { ok: false };
+  if (num < 0 || num > 10) return { ok: false };
+  return { ok: true, valor: num };
+}
+
+// ============================================================================
+// VALIDAÇÃO DE FALTAS DIGITADAS PELO ALUNO
+// Aceita: inteiro >= 0. Rejeita: -1, 2,5, abc, vazio.
+// ============================================================================
+function validarFaltaEdicao(texto) {
+  const bruto = String(texto).trim();
+  if (bruto === "") return { ok: false };
+  if (!/^\d+$/.test(bruto)) return { ok: false };
+  const num = Number(bruto);
+  if (!isFinite(num) || num < 0) return { ok: false };
+  return { ok: true, valor: num };
+}
+
+// ============================================================================
+// RENDERIZAÇÃO: CARDS E TABELA (PERMITE ATUALIZAÇÃO MÚLTIPLA)
+// ============================================================================
 function carregarBoletim() {
   const corpoTabela = document.getElementById("corpo-tabela");
   corpoTabela.innerHTML = "";
@@ -45,7 +99,7 @@ function carregarBoletim() {
   let contBomDesempenho = 0;
   let contAtencao = 0;
 
-  dadosBoletim.forEach((item) => {
+  dadosAtuais.forEach((item) => {
     const n1 = normalizarNota(item.tri1);
     const n2 = normalizarNota(item.tri2);
     const n3 = normalizarNota(item.tri3);
@@ -74,36 +128,110 @@ function carregarBoletim() {
       }
     }
 
-    const totalFaltasDisc = item.faltas.reduce((acc, curr) => acc + curr, 0);
+    const faltasArray = Array.isArray(item.faltas) ? item.faltas : [0, 0, 0];
+    const totalFaltasDisc = faltasArray.reduce((acc, curr) => acc + (Number(curr) || 0), 0);
     totalFaltasGeral += totalFaltasDisc;
 
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${item.disciplina}</td>
-      <td>${formatarExibicao(n1)}</td>
-      <td>${formatarExibicao(n2)}</td>
-      <td>${formatarExibicao(n3)}</td>
-      <td><strong>${formatarExibicao(media)}</strong></td>
-      <td>${totalFaltasDisc}</td>
-      <td class="${classeSituacao}">${situacao}</td>
-    `;
+    tr.dataset.index = dadosAtuais.indexOf(item);
+
+    // Célula da disciplina (textContent por segurança)
+    const tdDisc = document.createElement("td");
+    tdDisc.textContent = item.disciplina;
+    tr.appendChild(tdDisc);
+
+    // Células de notas (1º, 2º, 3º trimestre)
+    const tdsNotas = [n1, n2, n3];
+    const chavesNotas = ["tri1", "tri2", "tri3"];
+    tdsNotas.forEach((notaNorm, idx) => {
+      const td = document.createElement("td");
+      if (modoEdicao) {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "input-edicao";
+        input.dataset.tipo = "nota";
+        input.dataset.index = tr.dataset.index;
+        input.dataset.campo = chavesNotas[idx];
+        input.value = notaNorm === null ? "" : String(notaNorm).replace(".", ",");
+        td.appendChild(input);
+      } else {
+        td.textContent = formatarExibicao(notaNorm);
+      }
+      tr.appendChild(td);
+    });
+
+    // Média
+    const tdMedia = document.createElement("td");
+    const strong = document.createElement("strong");
+    strong.textContent = formatarExibicao(media);
+    tdMedia.appendChild(strong);
+    tr.appendChild(tdMedia);
+
+    // Faltas (total por disciplina)
+    const tdFaltas = document.createElement("td");
+    tdFaltas.textContent = String(totalFaltasDisc);
+    tr.appendChild(tdFaltas);
+
+    // Situação
+    const tdSit = document.createElement("td");
+    tdSit.className = classeSituacao;
+    tdSit.textContent = situacao;
+    tr.appendChild(tdSit);
+
     corpoTabela.appendChild(tr);
   });
 
-  const mediaGeral = qtdMediasValidas > 0 ? (somaMedias / qtdMediasValidas).toFixed(1).replace(".", ",") : "—";
+  // Linha de edição de faltas por trimestre (quando em modo edição)
+  if (modoEdicao) {
+    // Substitui a coluna de "Faltas" por três inputs por trimestre em uma linha extra
+    renderizarEdicaoFaltas();
+  }
+
+  const mediaGeral = qtdMediasValidas > 0
+    ? (somaMedias / qtdMediasValidas).toFixed(1).replace(".", ",")
+    : "—";
   document.getElementById("card-media").textContent = mediaGeral;
-  document.getElementById("card-faltas").textContent = totalFaltasGeral;
-  document.getElementById("card-bom-desempenho").textContent = contBomDesempenho;
-  document.getElementById("card-atencao").textContent = contAtencao;
+  document.getElementById("card-faltas").textContent = String(totalFaltasGeral);
+  document.getElementById("card-bom-desempenho").textContent = String(contBomDesempenho);
+  document.getElementById("card-atencao").textContent = String(contAtencao);
 }
 
+// Renderiza inputs de faltas por trimestre dentro da tabela
+function renderizarEdicaoFaltas() {
+  const corpoTabela = document.getElementById("corpo-tabela");
+  const linhas = corpoTabela.querySelectorAll("tr");
+  linhas.forEach((tr) => {
+    const index = Number(tr.dataset.index);
+    const item = dadosAtuais[index];
+    const faltasArray = Array.isArray(item.faltas) ? item.faltas : [0, 0, 0];
+    const tdFaltas = tr.children[5]; // coluna de faltas
+    if (!tdFaltas) return;
+    tdFaltas.innerHTML = "";
+    for (let i = 0; i < 3; i++) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "input-edicao";
+      input.dataset.tipo = "falta";
+      input.dataset.index = String(index);
+      input.dataset.trimestre = String(i);
+      input.value = String(Number(faltasArray[i]) || 0);
+      input.style.marginBottom = "2px";
+      input.style.display = "inline-block";
+      tdFaltas.appendChild(input);
+      if (i < 2) tdFaltas.appendChild(document.createElement("br"));
+    }
+  });
+}
+
+// ============================================================================
 // SORTEIO DE 20% DE CHANCE DE CHOVER NO CARREGAMENTO
+// ============================================================================
 function sortearClima() {
   const chance = Math.random();
-  if (chance < 0.20) { // 20% de chance de chover
+  if (chance < 0.20) {
     const camadaChuva = document.getElementById("camada-chuva");
     const camadaRaio = document.getElementById("camada-raio");
-    
+
     camadaChuva.style.display = "block";
     camadaRaio.style.display = "block";
 
@@ -125,5 +253,246 @@ function sortearClima() {
   }
 }
 
-carregarBoletim();
+// ============================================================================
+// TELA DE ACESSO POR PIN — POST /abrir
+// ============================================================================
+function configurarTelaPin() {
+  const inputPin = document.getElementById("input-pin");
+  const btnEntrar = document.getElementById("btn-entrar");
+  const mensagem = document.getElementById("pin-mensagem");
+
+  btnEntrar.addEventListener("click", async () => {
+    const pin = inputPin.value.trim();
+    if (pin === "") {
+      mensagem.textContent = "Digite o PIN.";
+      return;
+    }
+
+    mensagem.textContent = "Conectando...";
+    btnEntrar.disabled = true;
+
+    try {
+      const resposta = await fetch(`${CONFIG_ALUNO.apiUrl}/api/v1/boletins/abrir`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          turma: CONFIG_ALUNO.turma,
+          numero_chamada: CONFIG_ALUNO.numeroChamada,
+          pin: pin
+        })
+      });
+
+      if (resposta.status === 401) {
+        mensagem.textContent = "Turma, chamada ou PIN inválidos.";
+        btnEntrar.disabled = false;
+        return;
+      }
+      if (resposta.status === 429) {
+        mensagem.textContent = "Muitas tentativas. Aguarde um minuto e tente novamente.";
+        btnEntrar.disabled = false;
+        return;
+      }
+      if (!resposta.ok) {
+        mensagem.textContent = "Não foi possível conectar ao servidor. Tente novamente.";
+        btnEntrar.disabled = false;
+        return;
+      }
+
+      const json = await resposta.json();
+      // PIN permanece somente em memória
+      pinSessao = pin;
+      // Limpa o campo imediatamente após login bem-sucedido
+      inputPin.value = "";
+      mensagem.textContent = "";
+
+      // Define dados a exibir: API > local
+      if (json && json.dados !== null && json.dados !== undefined) {
+        dadosAtuais = normalizarDadosApi(json.dados);
+      } else {
+        dadosAtuais = JSON.parse(JSON.stringify(dadosBoletimLocal));
+      }
+
+      // Alterna telas
+      document.getElementById("area-pin").hidden = true;
+      document.getElementById("conteudo-boletim").hidden = false;
+
+      carregarBoletim();
+      configurarBotoesEdicao();
+    } catch (erro) {
+      mensagem.textContent = "Não foi possível conectar ao servidor. Tente novamente.";
+      btnEntrar.disabled = false;
+    }
+  });
+
+  // Permite Enter no campo PIN
+  inputPin.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      btnEntrar.click();
+    }
+  });
+}
+
+// Normaliza o formato dos dados vindos da API para o formato interno do projeto
+function normalizarDadosApi(dadosApi) {
+  const lista = Array.isArray(dadosApi.disciplinas) ? dadosApi.disciplinas : [];
+  return lista.map((d) => {
+    let faltas = [0, 0, 0];
+    if (Array.isArray(d.faltas)) {
+      faltas = [0, 0, 0].map((_, i) => Number(d.faltas[i]) || 0);
+    } else if (d.faltas && typeof d.faltas === "object") {
+      faltas = [
+        Number(d.faltas.tri1) || 0,
+        Number(d.faltas.tri2) || 0,
+        Number(d.faltas.tri3) || 0
+      ];
+    }
+    return {
+      disciplina: String(d.disciplina || ""),
+      tri1: d.tri1 !== undefined ? d.tri1 : null,
+      tri2: d.tri2 !== undefined ? d.tri2 : null,
+      tri3: d.tri3 !== undefined ? d.tri3 : null,
+      faltas: faltas
+    };
+  });
+}
+
+// ============================================================================
+// BOTÕES DE EDIÇÃO E SALVAMENTO
+// ============================================================================
+function configurarBotoesEdicao() {
+  const btnAlterar = document.getElementById("btn-alterar");
+  const btnSalvar = document.getElementById("btn-salvar");
+  const btnCancelar = document.getElementById("btn-cancelar");
+  const status = document.getElementById("status-salvamento");
+
+  btnAlterar.onclick = () => {
+    modoEdicao = true;
+    btnAlterar.hidden = true;
+    btnSalvar.hidden = false;
+    btnCancelar.hidden = false;
+    status.textContent = "";
+    status.className = "status-salvamento";
+    carregarBoletim();
+  };
+
+  btnCancelar.onclick = () => {
+    modoEdicao = false;
+    btnAlterar.hidden = false;
+    btnSalvar.hidden = true;
+    btnCancelar.hidden = true;
+    status.textContent = "";
+    status.className = "status-salvamento";
+    carregarBoletim();
+  };
+
+  btnSalvar.onclick = async () => {
+    // Valida todos os inputs antes de enviar
+    const inputs = document.querySelectorAll(".input-edicao");
+    let invalido = false;
+
+    inputs.forEach((input) => {
+      input.classList.remove("invalido");
+      const tipo = input.dataset.tipo;
+      const texto = input.value;
+
+      if (tipo === "nota") {
+        const r = validarNotaEdicao(texto);
+        if (!r.ok) {
+          input.classList.add("invalido");
+          invalido = true;
+        } else {
+          const index = Number(input.dataset.index);
+          const campo = input.dataset.campo;
+          dadosAtuais[index][campo] = r.valor;
+        }
+      } else if (tipo === "falta") {
+        const r = validarFaltaEdicao(texto);
+        if (!r.ok) {
+          input.classList.add("invalido");
+          invalido = true;
+        } else {
+          const index = Number(input.dataset.index);
+          const tri = Number(input.dataset.trimestre);
+          if (!Array.isArray(dadosAtuais[index].faltas)) {
+            dadosAtuais[index].faltas = [0, 0, 0];
+          }
+          dadosAtuais[index].faltas[tri] = r.valor;
+        }
+      }
+    });
+
+    if (invalido) {
+      status.textContent = "Verifique os campos destacados em vermelho.";
+      status.className = "status-salvamento erro";
+      return;
+    }
+
+    status.textContent = "Salvando...";
+    status.className = "status-salvamento";
+    btnSalvar.disabled = true;
+
+    // Prepara dados no formato esperado pela API
+    const dadosParaSalvar = {
+      disciplinas: dadosAtuais.map((d) => ({
+        disciplina: d.disciplina,
+        tri1: d.tri1,
+        tri2: d.tri2,
+        tri3: d.tri3,
+        faltas: Array.isArray(d.faltas) ? d.faltas : [0, 0, 0]
+      }))
+    };
+
+    try {
+      const resposta = await fetch(`${CONFIG_ALUNO.apiUrl}/api/v1/boletins/salvar`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          turma: CONFIG_ALUNO.turma,
+          numero_chamada: CONFIG_ALUNO.numeroChamada,
+          pin: pinSessao,
+          dados: dadosParaSalvar
+        })
+      });
+
+      if (resposta.status === 401) {
+        status.textContent = "Sessão inválida. Entre novamente.";
+        status.className = "status-salvamento erro";
+        btnSalvar.disabled = false;
+        return;
+      }
+      if (resposta.status === 429) {
+        status.textContent = "Muitas tentativas. Aguarde um minuto e tente novamente.";
+        status.className = "status-salvamento erro";
+        btnSalvar.disabled = false;
+        return;
+      }
+      if (!resposta.ok) {
+        status.textContent = "Não foi possível salvar. Tente novamente.";
+        status.className = "status-salvamento erro";
+        btnSalvar.disabled = false;
+        return;
+      }
+
+      // Sucesso
+      modoEdicao = false;
+      btnAlterar.hidden = false;
+      btnSalvar.hidden = true;
+      btnSalvar.disabled = false;
+      btnCancelar.hidden = true;
+      status.textContent = "Dados salvos com sucesso.";
+      status.className = "status-salvamento sucesso";
+      carregarBoletim();
+    } catch (erro) {
+      status.textContent = "Não foi possível salvar. Tente novamente.";
+      status.className = "status-salvamento erro";
+      btnSalvar.disabled = false;
+    }
+  };
+}
+
+// ============================================================================
+// INICIALIZAÇÃO
+// ============================================================================
+configurarTelaPin();
 sortearClima();
