@@ -11,14 +11,14 @@
   --sky-mid: #060c18;
   --sky-glow: #0e1a2d;
   --sky-horizon: #162842;
-  
+
   /* Cores da Lua e Sombras */
   --moon-core: #ffffff;
   --moon-surface: #e2e8f0;
   --moon-shadow-1: #94a3b8;
   --moon-shadow-2: #64748b;
   --moon-crater: #475569;
-  
+
   /* Cores da Árvore e Casca */
   --tree-bark-dark: #0f0a06;
   --tree-bark-mid: #1c140d;
@@ -26,12 +26,12 @@
   --leaf-dark: #040d07;
   --leaf-mid: #0b1f12;
   --leaf-light: #163a21;
-  
+
   /* Cores do Gramado */
   --grass-dark: #051209;
   --grass-mid: #0d2816;
   --grass-light: #184225;
-  
+
   /* Cores da Pele Anatomica das Mãos */
   --skin-light: #f5c4a5;
   --skin-mid: #e2a581;
@@ -39,13 +39,13 @@
   --skin-shadow: #985733;
   --skin-knuckle: #cd8761;
   --nail-color: rgba(255, 235, 225, 0.5);
-  
+
   /* Cores do Papel Pautado */
   --paper-bg: #fdfbf7;
   --paper-line: #e8e2d2;
   --paper-margin: rgba(239, 68, 68, 0.15);
   --paper-border: #d2c8b4;
-  
+
   /* Cores de Texto e Status */
   --text-main: #1e2530;
   --text-muted: #5a6578;
@@ -811,4 +811,212 @@ tr:hover {
   .mao-esquerda { left: -45px; }
   .mao-direita { right: -45px; }
   th, td { padding: 10px 6px; font-size: 0.85rem; }
+}
+
+/* --------------------------------------------------------------------------
+   15. ÁREA DE ACESSO POR PIN (NOVO)
+   -------------------------------------------------------------------------- */
+.area-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 20px 30px 20px;
+  text-align: center;
+}
+
+.pin-topo h2 {
+  font-size: 1.8rem;
+  color: var(--text-main);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.pin-info {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.pin-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 20px 26px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.pin-form label {
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.input-pin {
+  width: 160px;
+  padding: 10px 14px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  text-align: center;
+  letter-spacing: 4px;
+  color: var(--text-main);
+  background: #f8fafc;
+  transition: border-color 0.2s ease;
+}
+
+.input-pin:focus {
+  outline: none;
+  border-color: var(--text-main);
+}
+
+.btn-entrar {
+  background: var(--text-main);
+  color: #ffffff;
+  border: none;
+  padding: 11px 26px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-entrar:hover {
+  background: var(--text-dark);
+  transform: translateY(-2px);
+}
+
+.btn-entrar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pin-mensagem {
+  min-height: 22px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--status-warn);
+}
+
+.pin-mensagem.sucesso {
+  color: var(--status-good);
+}
+
+/* --------------------------------------------------------------------------
+   16. CONTROLES DE EDIÇÃO E SALVAMENTO (NOVO)
+   -------------------------------------------------------------------------- */
+.controles-edicao {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.btn-acao {
+  padding: 11px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-alterar {
+  background: var(--text-main);
+  color: #ffffff;
+}
+
+.btn-alterar:hover {
+  background: var(--text-dark);
+  transform: translateY(-2px);
+}
+
+.btn-salvar {
+  background: var(--status-good);
+  color: #ffffff;
+}
+
+.btn-salvar:hover {
+  background: #166534;
+  transform: translateY(-2px);
+}
+
+.btn-salvar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-cancelar {
+  background: #ffffff;
+  color: var(--text-main);
+  border: 1px solid #cbd5e1;
+}
+
+.btn-cancelar:hover {
+  background: #f1f5f9;
+}
+
+.status-salvamento {
+  min-height: 22px;
+  text-align: center;
+  margin-top: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.status-salvamento.sucesso {
+  color: var(--status-good);
+}
+
+.status-salvamento.erro {
+  color: var(--status-warn);
+}
+
+/* --------------------------------------------------------------------------
+   17. CAMPOS DE EDIÇÃO DENTRO DA TABELA (NOVO)
+   -------------------------------------------------------------------------- */
+.input-edicao {
+  width: 68px;
+  padding: 6px 4px;
+  border: 2px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--text-main);
+  background: #ffffff;
+  transition: border-color 0.2s ease;
+}
+
+.input-edicao:focus {
+  outline: none;
+  border-color: var(--text-main);
+}
+
+.input-edicao.invalido {
+  border-color: var(--status-warn);
+  background: var(--status-warn-bg);
+}
+
+.linha-invalida td {
+  background: rgba(254, 226, 226, 0.4);
+}
+
+.mensagem-invalido {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--status-warn);
+  font-weight: 700;
+  margin-top: 2px;
 }
