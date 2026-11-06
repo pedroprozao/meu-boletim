@@ -25,7 +25,7 @@
     <div class="estrelas-camada1"></div>
     <div class="estrelas-camada2"></div>
     <div class="estrelas-camada3"></div>
-    
+
     <!-- Lua Realista 3D com Crateras e Aura -->
     <div class="lua-realista-3d">
       <div class="lua-terminador"></div>
@@ -53,7 +53,7 @@
     <div class="galho g-esq-alto"></div>
     <div class="galho g-dir-baixo"></div>
     <div class="galho g-dir-alto"></div>
-    
+
     <!-- Folhagem e Copas em Camadas -->
     <div class="copa-folhas c-fundo1"></div>
     <div class="copa-folhas c-fundo2"></div>
@@ -97,7 +97,7 @@
        6. CENÁRIO CENTRAL: MÃOS ANATÔMICAS E BOLETIM EM PAPEL
        ==================================================================== -->
   <div class="mesa-cenario">
-    
+
     <!-- Mão Esquerda Anatômica em CSS -->
     <div class="mao-anatomica mao-esquerda">
       <div class="braco-pulso"></div>
@@ -125,57 +125,84 @@
       <div class="luz-lua-incidente"></div>
       <div class="dobra-canto"></div>
 
-      <!-- Cabeçalho -->
-      <header class="cabecalho">
-        <div class="brasao-escola">🏫</div>
-        <h1>Boletim Digital</h1>
-        <p class="subtitulo">9º Ano — Estudante Exemplo</p>
-      </header>
-
-      <!-- Cards de Resumo -->
-      <section class="cards-resumo">
-        <div class="card">
-          <h3>Média Geral</h3>
-          <p id="card-media">—</p>
+      <!-- Área de Acesso por PIN -->
+      <section id="area-pin" class="area-pin">
+        <div class="pin-topo">
+          <h2>Acesso ao Boletim</h2>
+          <p class="pin-info">Série: 9º Ano &nbsp;•&nbsp; Turma: 9B &nbsp;•&nbsp; Chamada: 30</p>
         </div>
-        <div class="card">
-          <h3>Total de Faltas</h3>
-          <p id="card-faltas">—</p>
+        <div class="pin-form">
+          <label for="input-pin">PIN</label>
+          <input type="password" id="input-pin" class="input-pin" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="Digite seu PIN">
+          <button id="btn-entrar" class="btn-entrar" type="button">Entrar</button>
         </div>
-        <div class="card">
-          <h3>Bom Desempenho</h3>
-          <p id="card-bom-desempenho">—</p>
-        </div>
-        <div class="card">
-          <h3>Atenção</h3>
-          <p id="card-atencao">—</p>
-        </div>
-        <div class="card">
-          <h3>Frequência</h3>
-          <p id="card-frequencia">92%</p>
-          <span class="status-frequencia">Frequência adequada</span>
-        </div>
+        <p id="pin-mensagem" class="pin-mensagem" role="status" aria-live="polite"></p>
       </section>
 
-      <!-- Tabela de Disciplinas -->
-      <main class="tabela-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Disciplina</th>
-              <th>1º Tri</th>
-              <th>2º Tri</th>
-              <th>3º Tri</th>
-              <th>Média</th>
-              <th>Faltas</th>
-              <th>Situação</th>
-            </tr>
-          </thead>
-          <tbody id="corpo-tabela">
-            <!-- As 15 disciplinas serão geradas via JavaScript -->
-          </tbody>
-        </table>
-      </main>
+      <!-- Conteúdo do Boletim (oculto até login) -->
+      <div id="conteudo-boletim" class="conteudo-boletim" hidden>
+
+        <!-- Cabeçalho -->
+        <header class="cabecalho">
+          <div class="brasao-escola">🏫</div>
+          <h1>Boletim Digital</h1>
+          <p class="subtitulo">9º Ano — Estudante Exemplo</p>
+        </header>
+
+        <!-- Cards de Resumo -->
+        <section class="cards-resumo">
+          <div class="card">
+            <h3>Média Geral</h3>
+            <p id="card-media">—</p>
+          </div>
+          <div class="card">
+            <h3>Total de Faltas</h3>
+            <p id="card-faltas">—</p>
+          </div>
+          <div class="card">
+            <h3>Bom Desempenho</h3>
+            <p id="card-bom-desempenho">—</p>
+          </div>
+          <div class="card">
+            <h3>Atenção</h3>
+            <p id="card-atencao">—</p>
+          </div>
+          <div class="card">
+            <h3>Frequência</h3>
+            <p id="card-frequencia">92%</p>
+            <span class="status-frequencia">Frequência adequada</span>
+          </div>
+        </section>
+
+        <!-- Tabela de Disciplinas -->
+        <main class="tabela-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Disciplina</th>
+                <th>1º Tri</th>
+                <th>2º Tri</th>
+                <th>3º Tri</th>
+                <th>Média</th>
+                <th>Faltas</th>
+                <th>Situação</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+              <!-- As 15 disciplinas serão geradas via JavaScript -->
+            </tbody>
+          </table>
+        </main>
+
+        <!-- Controles de Edição e Salvamento -->
+        <div class="controles-edicao">
+          <button id="btn-alterar" class="btn-acao btn-alterar" type="button">Alterar dados</button>
+          <button id="btn-salvar" class="btn-acao btn-salvar" type="button" hidden>Salvar alterações</button>
+          <button id="btn-cancelar" class="btn-acao btn-cancelar" type="button" hidden>Cancelar edição</button>
+        </div>
+
+        <p id="status-salvamento" class="status-salvamento" role="status" aria-live="polite"></p>
+      </div>
     </div>
   </div>
 
